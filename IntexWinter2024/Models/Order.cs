@@ -11,13 +11,10 @@ namespace IntexWinter2024.Models
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
 
-        //[DataType(DataType.Date)]
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
         public string DayOfWeek { get; set; }
-
-        //public int Time { get; set; } = 0;
 
         public string EntryMode { get; set; }
 
