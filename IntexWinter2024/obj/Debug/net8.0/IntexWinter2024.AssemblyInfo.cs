@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IntexWinter2024")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ac2217221c1107dbc1bd2ee7f1323b152f15323d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b545470f9b7eecaa6d1de801d7fb0494981d8f7b")]
 [assembly: System.Reflection.AssemblyProductAttribute("IntexWinter2024")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IntexWinter2024")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
