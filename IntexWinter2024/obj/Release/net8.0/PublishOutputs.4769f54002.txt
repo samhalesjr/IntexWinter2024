@@ -1,0 +1,7 @@
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\IntexWinter2024.exe
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\appsettings.json
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\IntexWinter2024.dll
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\IntexWinter2024.deps.json
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\IntexWinter2024.runtimeconfig.json
+C:\Users\samha\Documents\Applications\IntexWinter2024\IntexWinter2024\obj\Release\net8.0\PubTmp\Out\IntexWinter2024.pdb

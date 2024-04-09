@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<Product>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Number of Parts</th>
+            <th>Price</th>
+            <th>Image Link</th>
+            <th>Primary Color</th>
+            <th>Secondary Color</th>
+            <th>Description</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => p.Name)</td>
+                <td>@Html.DisplayFor(modelItem => p.Year)</td>
+                <td>@Html.DisplayFor(modelItem => p.NumParts)</td>
+                <td>@Html.DisplayFor(modelItem => p.Price)</td>
+                <td><a href="@p.ImgLink">Image Link</a></td>
+                <td>@Html.DisplayFor(modelItem => p.PrimaryColor)</td>
+                <td>@Html.DisplayFor(modelItem => p.SecondaryColor)</td>
+                <!--<td>@Html.DisplayFor(modelItem => p.Description)</td>-->
+                <td>@Html.DisplayFor(modelItem => p.Category)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

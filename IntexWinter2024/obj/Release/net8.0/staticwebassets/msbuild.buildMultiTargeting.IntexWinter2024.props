@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\IntexWinter2024.props" />
+</Project>
