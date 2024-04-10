@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntexWinter2024.Models
 {
-    public class IntexWinter2024Context : DbContext
+    public class IntexWinter2024Context : IdentityDbContext
     {
         public IntexWinter2024Context()
         {
@@ -15,6 +16,6 @@ namespace IntexWinter2024.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<LineItem> LineItems { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
+        //public virtual DbSet<Role> Roles { get; set; }
     }
 }

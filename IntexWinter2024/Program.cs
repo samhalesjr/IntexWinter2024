@@ -1,4 +1,5 @@
 using IntexWinter2024.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntexWinter2024
@@ -15,6 +16,17 @@ namespace IntexWinter2024
             builder.Services.AddDbContext<IntexWinter2024Context>(options =>
             {
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:AzureConnection"]);
+            });
+
+            // Added for user and session management
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IntexWinter2024Context>()
+                .AddDefaultTokenProviders();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout settings
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
 
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
@@ -35,6 +47,10 @@ namespace IntexWinter2024
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Added for user and session management
+            app.UseAuthentication();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
