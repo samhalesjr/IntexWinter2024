@@ -26,6 +26,23 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
+        public IActionResult Browse(int pageNum)
+        {
+            if (pageNum <= 0) 
+            {
+                pageNum = 1;
+            }
+
+            int pageSize = 5;
+
+            var products = _repo.Products
+                .OrderBy(x => x.ProductId)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize);
+
+            return View(products);
+        }
+
         //public IActionResult Index()
         //{
         //    string filePath = @"C:\Users\samha\Downloads\product_categories - product_categories.csv"; // Update this to your CSV file path
