@@ -31,6 +31,14 @@ namespace IntexWinter2024
                 options.Cookie.IsEssential = true;
             });
 
+            // GDPR cookie policy
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
             var app = builder.Build();
@@ -53,6 +61,9 @@ namespace IntexWinter2024
             // Added for user and session management
             app.UseAuthentication();
             app.UseSession();
+
+            // Cookie policy
+            app.UseCookiePolicy();
 
             app.MapControllerRoute(
                 name: "default",
