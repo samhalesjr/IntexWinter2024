@@ -4,7 +4,28 @@ namespace IntexWinter2024.Models.ViewModels
 {
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Please enter a first name")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please enter a last name")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your birthdate")]
+        [Display(Name = "Birthdate")]
+        [DataType(DataType.Date)]
+        public DateTime BirthDate { get; set; }
+
         [Required]
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Please enter your country of residence")]
+        [Display(Name = "Country of Residence")]
+        public string CountryOfResidence { get; set; }
+
+        [Required(ErrorMessage = "Please enter an email")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

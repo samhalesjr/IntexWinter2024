@@ -26,6 +26,26 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
+        public IActionResult AdminLandingPage()
+        {
+            return View();
+        }
+
+        public IActionResult OrderReview()
+        {
+            return View();
+        }
+
+        public IActionResult ProductEdit()
+        {
+            return View();
+        }
+
+        public IActionResult UserEdit()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
