@@ -14,8 +14,8 @@
         <nav>
             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             <a href="#">Browse Kits</a>
-            <a href="#">About Us</a>
-            <a href="#">Privacy</a>
+            <a asp-controller="Home" asp-action="AboutUs">About Us</a>
+            <a asp-controller="Home" asp-action="Privacy">Privacy</a>
             @if (!User.Identity.IsAuthenticated)
             {
                 <a class="nav-link" asp-controller="Account" asp-action="Login">Sign in</a>
