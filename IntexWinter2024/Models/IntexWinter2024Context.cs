@@ -19,6 +19,7 @@ namespace IntexWinter2024.Models
         public virtual DbSet<LineItem> LineItems { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+        public virtual DbSet<ProductBasedProductRecommendation> ProductBasedProductRecommendations { get; set; }
 
     }
 }
