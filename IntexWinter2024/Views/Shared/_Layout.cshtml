@@ -12,7 +12,9 @@
 </head>
 <body>
     <header>
-        <a asp-controller="Home" asp-action="Index"><b><h1>Aurora's Bricks</h1></b></a>
+        <a asp-controller="Home" asp-action="Index">
+            <b style="font-size: xx-large; font-family: sans-serif; color: white;">Aurora's Bricks</b>
+        </a>
         <nav>
             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             <a href="#">Browse Kits</a>
@@ -32,6 +34,8 @@
             }
             <div>
                 <a asp-area="" asp-controller="Home" asp-action="AdminLandingPage"><i class="fa-solid fa-user-tie"></i></a>
+            </div>
+            <div>
                 <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
             </div>
         </nav>
