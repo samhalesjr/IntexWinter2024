@@ -1,0 +1,79 @@
+﻿@if (!Context.Request.Cookies.ContainsKey(".AspNet.Consent"))
+{
+    <style>
+        #cookieConsentBanner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333; /* Darker shade */
+            color: #fff;
+            padding: 20px 10px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+            #cookieConsentBanner p {
+                margin: 10px 0;
+            }
+
+            #cookieConsentBanner a {
+                color: #62B6CB;
+            }
+
+            #cookieConsentBanner .consent-buttons {
+                display: flex;
+                justify-content: center;
+            }
+
+            #cookieConsentBanner button {
+                margin: 0 10px;
+                padding: 10px 20px;
+                color: #333;
+                background-color: #eee; /* Light grey */
+                border: 1px solid #ccc;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+                #cookieConsentBanner button:nth-child(2) {
+                    background-color: #bbb; /* Slightly darker grey */
+                }
+
+                #cookieConsentBanner button:hover {
+                    opacity: 0.9;
+                }
+
+    </style>
+    <div id="cookieConsentBanner">
+        <p>
+            Our website uses cookies to improve your experience. By continuing to use our site, you consent to our use of cookies.
+            <a asp-controller="Home" asp-action="Privacy">Learn more about our Privacy Policy</a>
+.
+        </p>
+        <div class="consent-buttons">
+            <button onclick="acceptConsent()">Accept</button>
+            <button onclick="declineConsent()">Decline</button>
+        </div>
+    </div>
+
+    <script>
+        function acceptConsent() {
+            var consentDate = new Date();
+            consentDate.setFullYear(consentDate.getFullYear() + 1);
+            document.cookie = ".AspNet.Consent=true; expires=" + consentDate.toUTCString() + "; path=/";
+            document.getElementById('cookieConsentBanner').style.display = 'none';
+        }
+
+        function declineConsent() {
+            var consentDate = new Date();
+            consentDate.setFullYear(consentDate.getFullYear() + 1);
+            document.cookie = ".AspNet.Consent=false; expires=" + consentDate.toUTCString() + "; path=/";
+            document.getElementById('cookieConsentBanner').style.display = 'none';
+        }
+    </script>
+}
