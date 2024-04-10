@@ -1,6 +1,8 @@
-﻿using IntexWinter2024.Models.ViewModels;
+﻿using IntexWinter2024.Models;
+using IntexWinter2024.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntexWinter2024.Controllers
 {
@@ -8,11 +10,13 @@ namespace IntexWinter2024.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IntexWinter2024Context _context;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IntexWinter2024Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -32,8 +36,20 @@ namespace IntexWinter2024.Controllers
 
                 if (result.Succeeded)
                 {
+                    // Assume _context is your ApplicationDbContext instance
+                    var customer = new Customer
+                    {
+                        UserId = user.Id, // Assuming Customer has a UserId field for association
+                        FirstName = "Sam",//model.FirstName,
+                        LastName = "Hales"//model.LastName,
+                        // Set other properties from the model
+                    };
+
+                    _context.Customers.Add(customer);
+                    await _context.SaveChangesAsync();
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)
                 {
@@ -66,7 +82,7 @@ namespace IntexWinter2024.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

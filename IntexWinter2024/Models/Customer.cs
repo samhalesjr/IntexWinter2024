@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace IntexWinter2024.Models
 {
@@ -26,10 +27,6 @@ namespace IntexWinter2024.Models
 
         public bool MfaEnabled { get; set; } = false;
 
-        // Assuming Role and User are other entities related to Customer
-        // This sets up a foreign key relationship in EF Core
-        // Ensure that RoleId and UserId match the type expected by the related entities (e.g., int, Guid, etc.)
-
         [ForeignKey("Role")]
         public int? RoleId { get; set; }
         public virtual Role Role { get; set; }
@@ -37,5 +34,11 @@ namespace IntexWinter2024.Models
         //[ForeignKey("User")]
         //public int UserId { get; set; }
         //public virtual User User { get; set; }
+
+
+        // Foreign key for ASP.NET Core Identity User
+        [ForeignKey("IdentityUser")]
+        public string? UserId { get; set; }
+        public virtual IdentityUser User { get; set; }
     }
 }
