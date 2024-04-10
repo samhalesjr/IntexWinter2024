@@ -12,11 +12,20 @@
     <header>
         <b><h1>Aurora's Bricks</h1></b>
         <nav>
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             <a href="#">Browse Kits</a>
             <a href="#">About Us</a>
             <a href="#">Privacy</a>
-            <a href="#">Sign In</a>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <a class="nav-link" asp-controller="Account" asp-action="Login">Sign in</a>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-link">Logout</button>
+                </form>
+            }
             <div>
                 <a href="#"><i class="fa-solid fa-user-tie"></i></a>
                 <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
