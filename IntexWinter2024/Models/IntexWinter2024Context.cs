@@ -8,7 +8,8 @@ namespace IntexWinter2024.Models
         public IntexWinter2024Context()
         {
         }
-        public IntexWinter2024Context(DbContextOptions<IntexWinter2024Context> options) : base(options)
+        public IntexWinter2024Context(DbContextOptions<IntexWinter2024Context> options) 
+            : base(options)
         {
         }
 

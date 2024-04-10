@@ -18,6 +18,8 @@ namespace IntexWinter2024
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:AzureConnection"]);
             });
 
+            builder.Services.AddScoped<IIntexWinter2024Repository, EFIntexWinter2024Repository>();
+
             // Added for user and session management
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IntexWinter2024Context>()

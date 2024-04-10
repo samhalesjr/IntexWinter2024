@@ -1,25 +1,28 @@
 using IntexWinter2024.Models;
+using IntexWinter2024.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.FileIO;
 using System.Diagnostics;
 using System.Globalization;
 
+
 namespace IntexWinter2024.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly IntexWinter2024Context _context;
+        private IIntexWinter2024Repository _repo;
 
-        public HomeController(ILogger<HomeController> logger, IntexWinter2024Context context)
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger, IIntexWinter2024Repository repo)
         {
             _logger = logger;
-            _context = context;
+            _repo = repo;
         }
 
         public IActionResult Index()
         {
-            var products = _context.Products.ToList(); // Retrieve all products from the database
+            var products = _repo.Products.ToList(); // Retrieve all products from the database
             return View(products); // Pass the products to the view
         }
 
