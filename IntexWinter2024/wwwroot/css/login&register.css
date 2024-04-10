@@ -1,0 +1,16 @@
+﻿.container {
+    margin: auto;
+    position: relative;
+    background-color: #F0F4FF;
+    padding: 20px;
+    width: 400px;
+    padding-top: 20px;
+}
+
+.container-header {
+    text-align: center;
+    background-color: #317287;
+    color: white;
+    padding: 20px 44px;
+    font-family: sans-serif;
+}

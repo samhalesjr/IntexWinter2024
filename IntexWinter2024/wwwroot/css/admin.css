@@ -1,0 +1,17 @@
+﻿.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust margin as needed */
+}
+
+.rounded-button {
+    padding: 30px 60px;
+    margin: 0 30px; /* Adjust margin between buttons as needed */
+    border-radius: 20px;
+    background-color: #317287; /* Adjust button color */
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

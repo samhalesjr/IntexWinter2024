@@ -23,6 +23,26 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
+        public IActionResult AdminLandingPage()
+        {
+            return View();
+        }
+
+        public IActionResult OrderReview()
+        {
+            return View();
+        }
+
+        public IActionResult ProductEdit()
+        {
+            return View();
+        }
+
+        public IActionResult UserEdit()
+        {
+            return View();
+        }
+
         //public IActionResult Index()
         //{
         //    string filePath = @"C:\Users\samha\Downloads\product_categories - product_categories.csv"; // Update this to your CSV file path
