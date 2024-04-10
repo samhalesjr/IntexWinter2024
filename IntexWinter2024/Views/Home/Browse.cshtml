@@ -4,9 +4,9 @@
 @{
     ViewData["Title"] = "Products";
 }
-@model IQueryable<Product>
+@model ProductsListViewModel
 
-@foreach (Product p in Model)
+@foreach (Product p in Model.Products)
 {
     <h2>@p.Name</h2>
     <ul>
@@ -16,6 +16,4 @@
     </ul>
 }
 
-<a asp-controller="Home" asp-action="Browse" asp-route-pageNum="1">1</a>
-<a asp-controller="Home" asp-action="Browse" asp-route-pageNum="2">2</a>
-<a asp-controller="Home" asp-action="Browse" asp-route-pageNum="3">3</a>
+<div page-model="@Model.PaginationInfo" page-action="Browse"></div>

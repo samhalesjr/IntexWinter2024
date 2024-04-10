@@ -34,13 +34,23 @@ namespace IntexWinter2024.Controllers
             }
 
             int pageSize = 5;
+            
+            var lego = new ProductsListViewModel
+            {
+                Products = _repo.Products
+                    .OrderBy(x => x.ProductId)
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize),
 
-            var products = _repo.Products
-                .OrderBy(x => x.ProductId)
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize);
-
-            return View(products);
+                PaginationInfo = new PaginationInfo
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = _repo.Products.Count()
+                }
+            };
+            
+            return View(lego);
         }
 
         //public IActionResult Index()
