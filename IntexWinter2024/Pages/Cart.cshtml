@@ -36,7 +36,12 @@
     </tfoot>
 </table>
 
+<div class="text-right">
+    <a class="btn btn-primary" href="/">Continue Shopping</a>
+</div>
+
 @*    
+    THIS CODE GOES IN THE PARTIAL VIEW PAGE FOR EACH PRODUCT SO THAT THAT PRODUCT CAN BE ADDED TO THE CART
     <form id="@Model.ProductId" method="post" asp-page="/Cart">
         <input type="hidden" asp-for="ProductId" />
         <button type="submit">Add To Cart</button>

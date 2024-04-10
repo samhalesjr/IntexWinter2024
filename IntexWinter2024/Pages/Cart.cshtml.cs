@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using IntexWinter2024.Models;
+using IntexWinter2024.Infrastructure;
 
 namespace IntexWinter2024.Pages
 {
@@ -17,17 +18,21 @@ namespace IntexWinter2024.Pages
 
         public void OnGet()
         {
+            Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
         }
         public void OnPost(int productId)
         {
             //Create an instance of a product to pass to the cart
             Product product = _repo.Products
                 .FirstOrDefault(x => x.ProductId == productId);
-
-            Cart = new Cart();
-
-            //Add the item to the cart, passing the productId and the quantity (set to 1, but could change if we want to choose how many items are added to the cart)
-            Cart.AddItem(product, 1);
+            
+            if (product != null)
+            {
+                Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
+                //Add the item to the cart, passing the productId and the quantity (set to 1, but could change if we want to choose how many items are added to the cart)
+                Cart.AddItem(product, 1);
+                HttpContext.Session.SetJson("cart", Cart);
+            }
         }
     }
 }
