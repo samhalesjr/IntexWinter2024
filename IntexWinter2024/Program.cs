@@ -1,5 +1,6 @@
 using IntexWinter2024.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 
@@ -66,8 +67,10 @@ namespace IntexWinter2024
             app.UseSession();
             
             // this will improve the browse page's URLs
-            app.MapControllerRoute("pagination", "/Home/Browse/Products/{pageNum}", new {Controller = "Home", Action = "Browse"});
-
+            app.MapControllerRoute("pageNumAndType", "/Browse/{productCategory}/{pageNum}", new { Controller = "Home", Action = "Browse" });
+            app.MapControllerRoute("pagination", "/Browse/{pageNum}", new {Controller = "Home", Action = "Browse", pageNum = 1});
+            app.MapControllerRoute("productCategory", "/Browse/{productCategory}", new { Controller = "Home", Action = "Browse", pageNum = 1 });
+            
             app.MapDefaultControllerRoute();
 
             app.MapRazorPages();
