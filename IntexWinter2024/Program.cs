@@ -39,6 +39,12 @@ namespace IntexWinter2024
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            });
+
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
             var app = builder.Build();
