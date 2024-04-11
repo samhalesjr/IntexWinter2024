@@ -26,19 +26,13 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
         
-        public class ProductViewModel
-        {
-            public Product Product { get; set; }
-            public List<string> Categories { get; set; }
-        }
-        
         public class ProductsListViewModel
         {
-            public List<ProductViewModel> Products { get; set; }
+            public List<ProductCategoryViewModel> Products { get; set; }
             public PaginationInfo PaginationInfo { get; set; }
         }
 
-        public IActionResult Browse(int pageNum)
+        public IActionResult Browse(int pageNum, string productCategory)
         {
             if (pageNum <= 0) 
             {
@@ -47,16 +41,31 @@ namespace IntexWinter2024.Controllers
 
             int pageSize = 5;
             
-            // differing from videos, because we split categories into different tables, we'll need to account for that here.
-            var products = _repo.Products
-                .OrderBy(x => x.ProductId)
+            // Here we're differing from the videos. We need to because the differing tables.
+            // Query products from the repository
+            var productsQuery = _repo.Products;
+
+            // Filter products based on the selected category
+            if (!string.IsNullOrEmpty(productCategory))
+            {
+                productsQuery = productsQuery
+                    .Where(p => _repo.ProductCategories
+                        .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+            }
+
+            // Order the products by ProductId
+            productsQuery = productsQuery.OrderBy(p => p.ProductId);
+
+            // Paginate the filtered and ordered products
+            var products = productsQuery
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
-            
+
+            // Create the view model
             var lego = new ProductsListViewModel
             {
-                Products = products.Select(p => new ProductViewModel
+                Products = products.Select(p => new ProductCategoryViewModel
                 {
                     Product = p,
                     Categories = _repo.ProductCategories
@@ -69,12 +78,13 @@ namespace IntexWinter2024.Controllers
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = _repo.Products.Count()
+                    TotalItems = productsQuery.Count() // Count the total filtered products
                 }
             };
-            
+    
             return View(lego);
         }
+
 
         //public IActionResult Index()
         //{
