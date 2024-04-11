@@ -71,9 +71,11 @@ namespace IntexWinter2024
             // Cookie policy
             app.UseCookiePolicy();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            // url routes for product details
+            app.MapControllerRoute("productDetails", "/ProductDetails/{productId?}",
+                new { Controller = "Home", Action = "ProductDetails" }, new { productId = @"\d+" });
+
+            app.MapDefaultControllerRoute();
 
             app.Run();
         }
