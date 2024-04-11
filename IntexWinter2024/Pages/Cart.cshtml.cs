@@ -7,6 +7,7 @@ namespace IntexWinter2024.Pages
 {
     public class CartModel : PageModel
     {
+
         public IIntexWinter2024Repository _repo;
 
         public Cart Cart { get; set; }
@@ -23,6 +24,7 @@ namespace IntexWinter2024.Pages
         {
             ReturnUrl = returnUrl ?? "/";
         }
+
         public IActionResult OnPost(int productId, string returnUrl)
         {
             //Create an instance of a product to pass to the cart

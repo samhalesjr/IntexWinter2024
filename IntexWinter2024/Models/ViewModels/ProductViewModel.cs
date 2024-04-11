@@ -2,7 +2,7 @@
 {
     public class ProductViewModel
     {
-        public Product Product { get; set; }
+        public IQueryable<Product> Product { get; set; }
         public List<string> Categories { get; set; }
     }
 }

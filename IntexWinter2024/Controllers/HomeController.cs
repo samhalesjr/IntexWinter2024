@@ -34,24 +34,14 @@ namespace IntexWinter2024.Controllers
             }
 
             int pageSize = 5;
-            
+
             // differing from videos, because we split categories into different tables, we'll need to account for that here.
-            var products = _repo.Products
-                .OrderBy(x => x.ProductId)
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            
-            var lego = new ProductsListViewModel
+            var productList = new ProductsListViewModel
             {
-                Products = products.Select(p => new ProductViewModel
-                {
-                    Product = p,
-                    Categories = _repo.ProductCategories
-                        .Where(pc => pc.ProductId == p.ProductId)
-                        .Select(pc => pc.CategoryName)
-                        .ToList()
-                }).ToList(),
+                Products = _repo.Products
+                    .OrderBy(x => x.Name)
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize),
 
                 PaginationInfo = new PaginationInfo
                 {
@@ -60,8 +50,33 @@ namespace IntexWinter2024.Controllers
                     TotalItems = _repo.Products.Count()
                 }
             };
+
+            //var products = _repo.Products
+            //    .OrderBy(x => x.ProductId)
+            //    .Skip((pageNum - 1) * pageSize)
+            //    .Take(pageSize)
+            //    .ToList();
             
-            return View(lego);
+            //var lego = new ProductsListViewModel
+            //{
+            //    Product = (IQueryable<Product>)products.Select(p => new ProductViewModel
+            //    {
+            //        Product = (IQueryable<Product>)p,
+            //        Categories = _repo.ProductCategories
+            //            .Where(pc => pc.ProductId == p.ProductId)
+            //            .Select(pc => pc.CategoryName)
+            //            .ToList()
+            //    }).ToList(),
+
+            //    PaginationInfo = new PaginationInfo
+            //    {
+            //        CurrentPage = pageNum,
+            //        ItemsPerPage = pageSize,
+            //        TotalItems = _repo.Products.Count()
+            //    }
+            //};
+            
+            return View(productList);
         }
 
         //public IActionResult Index()

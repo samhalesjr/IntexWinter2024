@@ -11,8 +11,9 @@
         <tr>
             <th>Product Id</th>
             <th>Name</th>
-            <th>Price</th>
             <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
             <th></th>
         </tr>
     </thead>
@@ -21,15 +22,16 @@
         @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
         {
             <tr>
-                <td>@l.Product.ProductId</td>
-                <td>@l.Product.Name</td>
-                <td>@l.Product.Price</td>
-                <td>@((l.Quantity * l.Product.Price).ToString("c"))</td>
+                <td class="text-left">@l.Product.ProductId</td>
+                <td class="text-center">@l.Product.Name</td>
+                <td class="text-right">@l.Quantity</td>
+                <td class="text-right">@l.Product.Price</td>
+                <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
                 <td class="text-center">
                     <form asp-page-handler="Remove" method="post">
                         <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
                         <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl" />
-                        <button type="submit" class="btn btn-danger">Remove</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -38,21 +40,13 @@
 
     <tfoot>
         <tr>
-            <td colspan="3" class="text-right">Total:</td>
+            <td colspan="4" class="text-right">Total:</td>
             <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
         </tr>
     </tfoot>
+
 </table>
 
 <div class="text-right">
     <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
 </div>
-
-@*    
-    THIS CODE GOES IN THE PARTIAL VIEW PAGE FOR EACH PRODUCT SO THAT THAT PRODUCT CAN BE ADDED TO THE CART
-    <form id="@Model.ProductId" method="post" asp-page="/Cart">
-        <input type="hidden" asp-for="ProductId" />
-        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-        <button type="submit" class="btn btn-success">Add To Cart</button>
-    </form>
-*@
