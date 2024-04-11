@@ -25,12 +25,6 @@ namespace IntexWinter2024.Controllers
             var products = _repo.Products.ToList(); // Retrieve all products from the database
             return View(products); // Pass the products to the view
         }
-        
-        public class ProductsListViewModel
-        {
-            public List<ProductCategoryViewModel> Products { get; set; }
-            public PaginationInfo PaginationInfo { get; set; }
-        }
 
         public IActionResult Browse(int pageNum, string productCategory)
         {
