@@ -69,5 +69,8 @@ namespace IntexWinter2024.Models
             var customer = _context.Customers.Include(c => c.Role).FirstOrDefault(c => c.UserId == userId);
             return customer;
         }
+
+        public IQueryable<ProductBasedProductRecommendation> ProductBasedProductRecommendations =>
+            _context.ProductBasedProductRecommendations;
     }
 }
