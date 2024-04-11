@@ -1,4 +1,6 @@
-﻿namespace IntexWinter2024.Models
+﻿using System.Linq;
+
+namespace IntexWinter2024.Models
 {
     public class EFIntexWinter2024Repository : IIntexWinter2024Repository
     {
@@ -13,5 +15,22 @@
         public IQueryable<LineItem> LineItems => _context.LineItems;
         public IQueryable<Role> Roles => _context.Roles;
         public IQueryable<ProductCategory> ProductCategories => _context.ProductCategories;
+
+        public List<string> GetCategoriesForProduct(int productId)
+        {
+            return _context.ProductCategories
+                .Where(pc => pc.ProductId == productId)
+                .Select(pc => pc.CategoryName)
+                .Distinct()
+                .ToList();
+        }
+
+        public List<string> GetAllCategories()
+        {
+            return _context.ProductCategories
+                .Select(pc => pc.CategoryName)
+                .Distinct()
+                .ToList();
+        }
     }
 }
