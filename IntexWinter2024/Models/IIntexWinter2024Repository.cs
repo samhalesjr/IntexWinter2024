@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Security.Claims;
 
 namespace IntexWinter2024.Models
 {
@@ -10,5 +12,6 @@ namespace IntexWinter2024.Models
         public IQueryable<LineItem> LineItems { get; }
         public IQueryable<Role> Roles { get; }
         public IQueryable<ProductCategory> ProductCategories { get; }
+        public Customer GetCustomer(ClaimsPrincipal user);
     }
 }

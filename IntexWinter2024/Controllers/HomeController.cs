@@ -8,13 +8,14 @@ using System.Globalization;
 
 namespace IntexWinter2024.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private IIntexWinter2024Repository _repo;
 
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger, IIntexWinter2024Repository repo)
+            : base(repo)
         {
             _logger = logger;
             _repo = repo;
