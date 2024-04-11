@@ -25,6 +25,18 @@ namespace IntexWinter2024.Controllers
             var products = _repo.Products.ToList(); // Retrieve all products from the database
             return View(products); // Pass the products to the view
         }
+        
+        public class ProductViewModel
+        {
+            public Product Product { get; set; }
+            public List<string> Categories { get; set; }
+        }
+        
+        public class ProductsListViewModel
+        {
+            public List<ProductViewModel> Products { get; set; }
+            public PaginationInfo PaginationInfo { get; set; }
+        }
 
         public IActionResult Browse(int pageNum)
         {
@@ -35,12 +47,23 @@ namespace IntexWinter2024.Controllers
 
             int pageSize = 5;
             
+            // differing from videos, because we split categories into different tables, we'll need to account for that here.
+            var products = _repo.Products
+                .OrderBy(x => x.ProductId)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            
             var lego = new ProductsListViewModel
             {
-                Products = _repo.Products
-                    .OrderBy(x => x.ProductId)
-                    .Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize),
+                Products = products.Select(p => new ProductViewModel
+                {
+                    Product = p,
+                    Categories = _repo.ProductCategories
+                        .Where(pc => pc.ProductId == p.ProductId)
+                        .Select(pc => pc.CategoryName)
+                        .ToList()
+                }).ToList(),
 
                 PaginationInfo = new PaginationInfo
                 {

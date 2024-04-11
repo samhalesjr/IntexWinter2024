@@ -1,0 +1,18 @@
+@model IntexWinter2024.Controllers.HomeController.ProductViewModel
+
+<div class="card m-1 p-1">
+    <h4>@Model.Product.Name</h4>
+    <ul>
+        <li>$@Model.Product.Price</li>
+        <li>@Model.Product.PrimaryColor</li>
+        <li>Year Released: @Model.Product.Year</li>
+        @if (Model.Categories.Count == 1)
+        {
+            <li>Category: @Model.Categories.First()</li>
+        }
+        else
+        {
+            <li>Categories: @string.Join(", ", Model.Categories)</li>
+        }
+    </ul>
+</div>

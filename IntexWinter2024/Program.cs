@@ -1,6 +1,7 @@
 using IntexWinter2024.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 
 namespace IntexWinter2024
 {
@@ -53,10 +54,11 @@ namespace IntexWinter2024
             // Added for user and session management
             app.UseAuthentication();
             app.UseSession();
+            
+            // this will improve the browse page's URLs
+            app.MapControllerRoute("pagination", "/Home/Browse/Products/{pageNum}", new {Controller = "Home", Action = "Browse"});
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapDefaultControllerRoute();
 
             app.Run();
         }

@@ -4,16 +4,14 @@
 @{
     ViewData["Title"] = "Products";
 }
-@model ProductsListViewModel
+@using IntexWinter2024.Controllers
+@model IntexWinter2024.Controllers.HomeController.ProductsListViewModel
 
-@foreach (Product p in Model.Products)
+@foreach (HomeController.ProductViewModel p in Model.Products)
 {
-    <h2>@p.Name</h2>
-    <ul>
-        <li>@p.Price</li>
-        <li>@p.PrimaryColor</li>
-        <li>@p.Year</li>
-    </ul>
+    <partial name="ProductSummary" model="p"/>
+
 }
 
-<div page-model="@Model.PaginationInfo" page-action="Browse"></div>
+<div page-model="@Model.PaginationInfo" page-action="Browse" page-class-enabled="true" page-class="btn" 
+     page-class-normal="btn-outline-dark" page-class-selected="btn-primary" class="btn-group pull-right m-1"></div>

@@ -13,7 +13,7 @@
         <b><h1>Aurora's Bricks</h1></b>
         <nav>
             <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-            <a href="#">Browse Kits</a>
+            <a asp-controller="Home" asp-action="Browse">Browse Kits</a>
             <a href="#">About Us</a>
             <a href="#">Privacy</a>
             @if (!User.Identity.IsAuthenticated)
