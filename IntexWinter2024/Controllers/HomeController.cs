@@ -62,11 +62,11 @@ namespace IntexWinter2024.Controllers
                 ProductCategoryViewModels = products.Select(p => new ProductCategoryViewModel
                 {
                     Products = p,
-                    Categories = _repo.ProductCategories
+                    Categories = (IQueryable<ProductCategory>)_repo.ProductCategories
                         .Where(pc => pc.ProductId == p.ProductId)
                         .Select(pc => pc.CategoryName)
                         .ToList()
-                }),
+                }).ToList(),
 
                 PaginationInfo = new PaginationInfo
                 {
