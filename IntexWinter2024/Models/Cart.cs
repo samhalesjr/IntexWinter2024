@@ -6,7 +6,7 @@ namespace IntexWinter2024.Models
     {
         public List<CartLine> Lines { get; set; } = new List<CartLine>();
 
-        public void AddItem(Product p, int quantity)
+        public virtual void AddItem(Product p, int quantity)
         {
             CartLine? line = Lines
                 .Where(x => x.Product.ProductId == p.ProductId)
@@ -30,10 +30,10 @@ namespace IntexWinter2024.Models
         }
 
         //Remove an item from the cart
-        public void RemoveLine(Product p) => Lines.RemoveAll(x => x.Product.ProductId == p.ProductId);
+        public virtual void RemoveLine(Product p) => Lines.RemoveAll(x => x.Product.ProductId == p.ProductId);
 
         //Clear the cart
-        public void ClearCart() => Lines.Clear();
+        public virtual void ClearCart() => Lines.Clear();
 
         //Get the sum of price x quantity to get the cart total
         public decimal CalculateTotal() => Lines.Sum(x => x.Product.Price * x.Quantity);
