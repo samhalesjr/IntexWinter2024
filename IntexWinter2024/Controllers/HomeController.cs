@@ -26,14 +26,7 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
-        public IQueryable<ProductCategory> GetQueryable()
-        {
-            return _repo.ProductCategories
-                                .Where(pc => pc.ProductId == p.ProductId)
-                                .Select(pc => pc.CategoryName);
-        }
-
-        public IActionResult Browse(int pageNum, string productCategory, IQueryable<ProductCategory> queryable)
+        public IActionResult Browse(int pageNum, string productCategory)
         {
             if (pageNum <= 0) 
             {
@@ -69,7 +62,10 @@ namespace IntexWinter2024.Controllers
                 ProductCategoryViewModels = products.Select(p => new ProductCategoryViewModel
                 {
                     Products = p,
-                    Categories = queryable
+                    Categories = _repo.ProductCategories
+                        .Where(pc => pc.ProductId == p.ProductId)
+                        .Select(pc => pc.CategoryName)
+                        .ToList()
                 }),
 
                 PaginationInfo = new PaginationInfo
