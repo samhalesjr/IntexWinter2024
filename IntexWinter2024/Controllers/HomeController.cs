@@ -26,7 +26,14 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
-        public IActionResult Browse(int pageNum, string productCategory)
+        public IQueryable<ProductCategory> GetQueryable()
+        {
+            return _repo.ProductCategories
+                                .Where(pc => pc.ProductId == p.ProductId)
+                                .Select(pc => pc.CategoryName);
+        }
+
+        public IActionResult Browse(int pageNum, string productCategory, IQueryable<ProductCategory> queryable)
         {
             if (pageNum <= 0) 
             {
@@ -59,14 +66,11 @@ namespace IntexWinter2024.Controllers
             // Create the view model
             var lego = new ProductsListViewModel
             {
-                Products = products.Select(p => new ProductCategoryViewModel
+                ProductCategoryViewModels = products.Select(p => new ProductCategoryViewModel
                 {
                     Products = p,
-                    Categories = _repo.ProductCategories
-                        .Where(pc => pc.ProductId == p.ProductId)
-                        .Select(pc => pc.CategoryName)
-                        .ToList()
-                }).ToList(),
+                    Categories = queryable
+                }),
 
                 PaginationInfo = new PaginationInfo
                 {
