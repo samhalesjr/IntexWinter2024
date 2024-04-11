@@ -13,5 +13,19 @@
         public IQueryable<LineItem> LineItems => _context.LineItems;
         public IQueryable<Role> Roles => _context.Roles;
         public IQueryable<ProductCategory> ProductCategories => _context.ProductCategories;
+
+        // Method that saves changes made to a product's information
+        public void EditProduct(Product updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
+        }
+
+        // Method that saves changes made to a customer's information
+        public void EditCustomer(Customer updatedInfo)
+        {
+            _context.Update(updatedInfo);
+            _context.SaveChanges();
+        }
     }
 }

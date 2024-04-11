@@ -37,7 +37,7 @@ namespace IntexWinter2024.Models
 
 
         // Foreign key for ASP.NET Core Identity User
-        [ForeignKey("IdentityUser")]
+        [ForeignKey("User")]
         public string? UserId { get; set; }
         public virtual IdentityUser User { get; set; }
     }

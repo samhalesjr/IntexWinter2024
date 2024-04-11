@@ -1,6 +1,7 @@
 using IntexWinter2024.Models;
 using IntexWinter2024.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.FileIO;
 using System.Diagnostics;
 using System.Globalization;
@@ -33,17 +34,62 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult OrderReview()
         {
-            return View();
+            var fraudulentOrders = _repo.Orders
+                .Where(x => x.Fraud == true)
+                .ToList();
+
+            return View(fraudulentOrders);
         }
 
         public IActionResult ProductEdit()
         {
-            return View();
+            var products = _repo.Products
+                .ToList();
+
+            return View(products);
+        }
+
+        [HttpGet]
+        public IActionResult ProductEditPage(int id)
+        {
+            var productToEdit = _repo.Products
+                .SingleOrDefault(x => x.ProductId == id);
+
+            return View(productToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult ProductEdit(Product updatedInfo)
+        {
+            _repo.EditProduct(updatedInfo);
+
+            return RedirectToAction("ProductEdit");
         }
 
         public IActionResult UserEdit()
         {
-            return View();
+            var customers = _repo.Customers
+                .ToList();
+
+            return View(customers);
+        }
+
+        [HttpGet]
+        public IActionResult UserEditPage(int id)
+        {
+            var userToEdit = _repo.Customers
+                //.Include(x => x.Role)
+                .SingleOrDefault(x => x.CustomerId == id);
+
+            return View(userToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult UserEdit(Customer updatedInfo)
+        {
+            _repo.EditCustomer(updatedInfo);
+
+            return RedirectToAction("UserEdit");
         }
 
         public IActionResult Privacy()
