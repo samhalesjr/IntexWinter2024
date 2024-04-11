@@ -34,13 +34,15 @@ namespace IntexWinter2024.Controllers
 
             if (ModelState.IsValid)
             {
-                order.Lines = (ICollection<LineItem>)cart.Lines.Select(cl => new CartLine
+                order.Lines = cart.Lines.Select(l => new LineItem
                 {
-                    Product = cl.Product,
-                    Quantity = cl.Quantity
+                    ProductId = l.Product.ProductId,
+                    Qty = l.Quantity
                 }).ToList();
+
                 _repo.SaveOrder(order);
                 cart.ClearCart();
+
                 return RedirectToPage("/Completed", new { transactionId = order.TransactionId });
             }
             else

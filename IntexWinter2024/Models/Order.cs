@@ -11,7 +11,7 @@ namespace IntexWinter2024.Models
         public int TransactionId { get; set; }
 
         [BindNever]
-        public ICollection<LineItem> Lines { get; set; } = new List<LineItem>(); //This is an ICollection<> in the book. The controller couldn't convert the ICollection to a List 
+        public List<LineItem> Lines { get; set; } = new List<LineItem>(); //This is an ICollection<> in the book. The controller couldn't convert the ICollection to a List 
 
         [ForeignKey("Customer")]
         //public int CustomerId { get; set; }

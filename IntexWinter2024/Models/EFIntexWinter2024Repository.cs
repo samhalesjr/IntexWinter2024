@@ -17,7 +17,7 @@ namespace IntexWinter2024.Models
                                 .ThenInclude(l => l.Product);
         public void SaveOrder(Order order)
         {
-            _context.AttachRange(order.Lines.Select(l => l.LineItemId)); //This is l.Line in the book and may need to be that way to not just add the product but the quantity as well
+            _context.AttachRange(order.Lines.Select(l => l)); //This is l.Line in the book and may need to be that way to not just add the product but the quantity as well
             if (order.TransactionId == 0)
             {
                 _context.Orders.Add(order);
