@@ -18,11 +18,16 @@ namespace IntexWinter2024.Controllers
             cart = cartService;
         }
 
-        public ViewResult Checkout() => View(new Order());
+        public IActionResult Checkout()
+        {
+            return View(new Order());
+        }
 
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
+            //order.CustomerId = ViewData["CustomerId"];
+
             if (cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError
@@ -34,6 +39,7 @@ namespace IntexWinter2024.Controllers
 
             if (ModelState.IsValid)
             {
+                //order.Lines = cart.Lines.ToArray(); //The book does it this way
                 order.Lines = cart.Lines.Select(l => new LineItem
                 {
                     ProductId = l.Product.ProductId,

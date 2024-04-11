@@ -14,7 +14,7 @@ namespace IntexWinter2024.Models
         public List<LineItem> Lines { get; set; } = new List<LineItem>(); //This is an ICollection<> in the book. The controller couldn't convert the ICollection to a List 
 
         [ForeignKey("Customer")]
-        //public int CustomerId { get; set; }
+        public int CustomerId { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
