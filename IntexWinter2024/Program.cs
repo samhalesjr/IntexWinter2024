@@ -1,6 +1,8 @@
 using IntexWinter2024.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 
 namespace IntexWinter2024
 {
@@ -19,6 +21,14 @@ namespace IntexWinter2024
             });
 
             builder.Services.AddScoped<IIntexWinter2024Repository, EFIntexWinter2024Repository>();
+
+            builder.Services.AddRazorPages();
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+
+            builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Added for user and session management
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -39,6 +49,12 @@ namespace IntexWinter2024
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+            });
+
             builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
             var app = builder.Build();
@@ -54,6 +70,8 @@ namespace IntexWinter2024
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -61,13 +79,23 @@ namespace IntexWinter2024
             // Added for user and session management
             app.UseAuthentication();
             app.UseSession();
+            
+            // this will improve the browse page's URLs
+            app.MapControllerRoute("pageNumAndType", "/Browse/{productCategory}/{pageNum}", new { Controller = "Home", Action = "Browse" });
+            app.MapControllerRoute("pagination", "/Browse/{pageNum}", new {Controller = "Home", Action = "Browse", pageNum = 1});
+            app.MapControllerRoute("productCategory", "/Browse/{productCategory}", new { Controller = "Home", Action = "Browse", pageNum = 1 });
+            
+            app.MapDefaultControllerRoute();
 
+            app.MapRazorPages();
             // Cookie policy
             app.UseCookiePolicy();
 
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+            // url routes for product details
+            app.MapControllerRoute("productDetails", "/ProductDetails/{productId?}",
+                new { Controller = "Home", Action = "ProductDetails" }, new { productId = @"\d+" });
+
+            app.MapDefaultControllerRoute();
 
             app.Run();
         }

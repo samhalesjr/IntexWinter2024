@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Security.Claims;
 
 namespace IntexWinter2024.Models
 {
@@ -12,5 +15,8 @@ namespace IntexWinter2024.Models
         public IQueryable<ProductCategory> ProductCategories { get; }
         public void EditProduct(Product updatedInfo);
         public void EditCustomer(Customer updatedInfo);
+        public List<string> GetAllCategories();
+        public List<string> GetCategoriesForProduct(int productId);
+        public Customer GetCustomer(ClaimsPrincipal user);
     }
 }

@@ -31,11 +31,6 @@ namespace IntexWinter2024.Models
         public int? RoleId { get; set; }
         public virtual Role Role { get; set; }
 
-        //[ForeignKey("User")]
-        //public int UserId { get; set; }
-        //public virtual User User { get; set; }
-
-
         // Foreign key for ASP.NET Core Identity User
         [ForeignKey("User")]
         public string? UserId { get; set; }

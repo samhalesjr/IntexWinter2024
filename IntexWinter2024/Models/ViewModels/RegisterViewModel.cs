@@ -41,6 +41,6 @@ namespace IntexWinter2024.Models.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        // Add any additional fields you might need for registration
+        public string RecaptchaToken { get; set; }
     }
 }
