@@ -1,11 +1,28 @@
-@model Product
+@model ProductDetailsViewModel
 
-<div class="row-cols-10">
-    <div class="box-shadow col-4">image goes here</div>
+<div class="row m-1 p-1">
+    <div class="bg-primary col-4">image goes here</div>
     
-    <div class="col-6">
-            <h3>Title: @Model.Name</h3>
-            <p>@Model.Price</p>
+    <div class="col-8">
+        <h3>Title: @Model.ProductCategory.Product.Name</h3>
+        <p>@Model.ProductCategory.Product.Price</p>
+        @if (Model.ProductCategory.Categories.Count() == 1)
+        {
+            <li>Category: @Model.ProductCategory.Categories.First()</li>
+        }
+        else
+        {
+            <li>Categories: @string.Join(", ", Model.ProductCategory.Categories)</li>
+        }
     </div>
-
+</div>
+<div class="m-2">
+    <h4>Recommendation Products:</h4>
+    <ul>
+        @foreach (var product in Model.ProductBasedProductRecommendation)
+        {
+            <li>Product ID: @product.ProductId</li>
+            <li>Name: @product.Name</li>
+        }
+    </ul>
 </div>

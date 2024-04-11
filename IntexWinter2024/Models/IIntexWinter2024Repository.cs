@@ -16,5 +16,6 @@ namespace IntexWinter2024.Models
         public List<string> GetAllCategories();
         public List<string> GetCategoriesForProduct(int productId);
         public Customer GetCustomer(ClaimsPrincipal user);
+        public IQueryable<ProductBasedProductRecommendation> ProductBasedProductRecommendations { get; }
     }
 }

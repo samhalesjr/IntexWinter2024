@@ -1,7 +1,10 @@
 @model ProductCategoryViewModel
 
 <div class="card m-1 p-1">
-    <h4>@Model.Product.Name</h4>
+    <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@Model.Product.ProductId">
+        <h4>@Model.Product.Name</h4>
+    </a>
+
     <ul>
         <li>$@Model.Product.Price</li>
         <li>@Model.Product.PrimaryColor</li>
@@ -14,6 +17,7 @@
         {
             <li>Categories: @string.Join(", ", Model.Categories)</li>
         }
+        <li>Main color: @Model.Product.PrimaryColor</li>
     </ul>
     <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
         <input type="hidden" asp-for="Product.ProductId" />
