@@ -67,7 +67,7 @@ namespace IntexWinter2024.Controllers
             {
                 Products = products.Select(p => new ProductCategoryViewModel
                 {
-                    Product = p,
+                    Products = p,
                     Categories = _repo.ProductCategories
                         .Where(pc => pc.ProductId == p.ProductId)
                         .Select(pc => pc.CategoryName)

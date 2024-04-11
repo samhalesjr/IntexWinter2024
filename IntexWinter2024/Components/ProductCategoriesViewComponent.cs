@@ -16,6 +16,8 @@ public class ProductCategoriesViewComponent : ViewComponent
 
     public IViewComponentResult Invoke()
     {
+        ViewBag.SelectedProductCategory = RouteData?.Values["productCategory"];
+        
         var productCategories = _legoRepo.ProductCategories
             .Select(x => x.CategoryName)
             .Distinct()

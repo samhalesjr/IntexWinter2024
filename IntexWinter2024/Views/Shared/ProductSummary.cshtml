@@ -2,11 +2,11 @@
 @model IntexWinter2024.Models.ViewModels.ProductCategoryViewModel
 
 <div class="card m-1 p-1">
-    <h4>@Model.Product.Name</h4>
+    <h4>@Model.Products.Name</h4>
     <ul>
-        <li>$@Model.Product.Price</li>
-        <li>@Model.Product.PrimaryColor</li>
-        <li>Year Released: @Model.Product.Year</li>
+        <li>$@Model.Products.Price</li>
+        <li>@Model.Products.PrimaryColor</li>
+        <li>Year Released: @Model.Products.Year</li>
         @if (Model.Categories.Count == 1)
         {
             <li>Category: @Model.Categories.First()</li>
@@ -16,8 +16,8 @@
             <li>Categories: @string.Join(", ", Model.Categories)</li>
         }
     </ul>
-    <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
-        <input type="hidden" asp-for="Product.ProductId" />
+    <form id="@Model.Products.ProductId" method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="Products.ProductId" />
         <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
         <button type="submit" class="btn btn-success">Add To Cart</button>
     </form>

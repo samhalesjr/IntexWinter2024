@@ -5,6 +5,7 @@
     
     @foreach (string pc in Model ?? Enumerable.Empty<string>())
     {
-        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Browse" asp-route-productCategory="@pc" asp-route-pageNum="1"><p>@pc</p></a>
+        <a class="btn @(pc == ViewBag.SelectedProductCategory ? "btn-primary" : "btn-outline-secondary")" 
+           asp-controller="Home" asp-action="Browse" asp-route-productCategory="@pc" asp-route-pageNum="1"><p>@pc</p></a>
     }
 </div>
