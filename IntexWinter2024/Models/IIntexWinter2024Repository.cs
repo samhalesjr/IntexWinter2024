@@ -7,6 +7,7 @@ namespace IntexWinter2024.Models
         public IQueryable<Customer> Customers { get; }
         public IQueryable<Product> Products { get; }
         public IQueryable<Order> Orders { get; }
+        void SaveOrder(Order order);
         public IQueryable<LineItem> LineItems { get; }
         public IQueryable<Role> Roles { get; }
         public IQueryable<ProductCategory> ProductCategories { get; }
