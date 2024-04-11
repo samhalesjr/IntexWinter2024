@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace IntexWinter2024.Models
 {
@@ -10,5 +11,7 @@ namespace IntexWinter2024.Models
         public IQueryable<LineItem> LineItems { get; }
         public IQueryable<Role> Roles { get; }
         public IQueryable<ProductCategory> ProductCategories { get; }
+        public List<string> GetAllCategories();
+        public List<string> GetCategoriesForProduct(int productId);
     }
 }

@@ -1,7 +1,8 @@
-namespace IntexWinter2024.Models.ViewModels;
-
-public class ProductCategoryViewModel
+namespace IntexWinter2024.Models.ViewModels
 {
-    public Product Products { get; set; }
-    public IQueryable<ProductCategory> Categories { get; set; }
+    public class ProductCategoryViewModel
+    {
+        public Product Product { get; set; }
+        public List<string> Categories { get; set; }
+    }
 }

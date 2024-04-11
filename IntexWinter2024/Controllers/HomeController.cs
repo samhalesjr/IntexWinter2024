@@ -1,9 +1,11 @@
+using IntexWinter2024.Components;
 using IntexWinter2024.Models;
 using IntexWinter2024.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.FileIO;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 
 namespace IntexWinter2024.Controllers
@@ -28,13 +30,13 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult Browse(int pageNum, string productCategory)
         {
-            if (pageNum <= 0) 
+            if (pageNum <= 0)
             {
                 pageNum = 1;
             }
 
             int pageSize = 5;
-            
+
             // Here we're differing from the videos. We need to because the differing tables.
             // Query products from the repository
             var productsQuery = _repo.Products;
@@ -56,28 +58,39 @@ namespace IntexWinter2024.Controllers
                 .Take(pageSize)
                 .ToList();
 
+            var productViewModels = new List<ProductCategoryViewModel>();
+
+            foreach (var product in products)
+            {
+                var categories = _repo.GetCategoriesForProduct(product.ProductId);
+
+                var productViewModel = new ProductCategoryViewModel
+                {
+                    Product = product,
+                    Categories = categories
+                };
+
+                productViewModels.Add(productViewModel);
+            }
+
             // Create the view model
             var lego = new ProductsListViewModel
-            {
-                ProductCategoryViewModels = products.Select(p => new ProductCategoryViewModel
-                {
-                    Products = p,
-                    Categories = (IQueryable<ProductCategory>)_repo.ProductCategories
-                        .Where(pc => pc.ProductId == p.ProductId)
-                        .Select(pc => pc.CategoryName)
-                        .ToList()
-                }).ToList(),
+            { 
+                Categories = _repo.GetAllCategories(),
 
-                PaginationInfo = new PaginationInfo
+                PaginationInfo = new PaginationInfo()
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = productsQuery.Count() // Count the total filtered products
-                }
+                    TotalItems = productsQuery.Count()// Count the total filtered products
+                },
+
+                ProductCategoryViewModels = productViewModels
             };
-    
+
             return View(lego);
         }
+
 
 
         //public IActionResult Index()
