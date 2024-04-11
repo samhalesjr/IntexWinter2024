@@ -6,10 +6,28 @@
 
 @model OrdersListViewModel
 
-<h1>Hi @Model.Customer.FirstName, Here are your Previous Orders:</h1>
 
-@foreach (Order o in Model.Orders)
-{
-    <h1>@o.TransactionId</h1>
-    <h1>@o.CustomerId</h1>
-}
+    @if (Model.Orders.Count() == 0)
+    {
+        <h2 style="text-align: center; font-family: sans-serif;">Hi, @Model.Customer.FirstName! You don't have any previous orders.</h2>
+    }
+    else
+    {
+        <div class="container">
+            <div class="container-header">
+                <h2 style="text-align: center; font-family: sans-serif; color: white;">Hi, @Model.Customer.FirstName! Here are your past orders:</h2>
+            </div>
+            @foreach (Order o in Model.Orders)
+            {
+                <div class="order-info-container">
+                    <h3>Transaction ID: @o.TransactionId</h3>
+                    <h3>Date of Purchase: @o.DayOfWeek, @o.Date</h3>
+                    <h3>@o.EntryMode</h3>
+                    <h3>Total Cost: @o.Amount</h3>
+                    <h3>Transaction Method: @o.TypeOfTransaction</h3>
+                    <h3>Shipping Address: @o.ShippingAddress</h3>
+                    <h3>Type of Card Used: @o.TypeOfCard</h3>
+                </div>
+            }
+        </div>
+    }

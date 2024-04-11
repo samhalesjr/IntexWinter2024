@@ -15,7 +15,7 @@
             <td>Birth Date</td>
             <td>Country of Residence</td>
             <td>Gender</td>
-            <!--<td>Role</td>-->
+            <td>Role</td>
             <td>Edit</td>
         </tr>
     </thead>
@@ -29,7 +29,7 @@
                 <td>@c.BirthDate</td>
                 <td>@c.CountryOfResidence</td>
                 <td>@c.Gender</td>
-                <!--<td>@c.Role</td>-->
+                <td>@(c.Role != null ? c.Role.Name : "No Role")</td>
                 <td><a class="btn btn-danger" asp-controller="Home" asp-action="UserEditPage" asp-route-id="@c.CustomerId" style="background-color: #317287; border-color: black;">Edit</a></td>
             </tr>
         }
