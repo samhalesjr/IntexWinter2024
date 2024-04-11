@@ -12,12 +12,14 @@ namespace IntexWinter2024.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IntexWinter2024Context _context;
+        private readonly IConfiguration _configuration;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IntexWinter2024Context context)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IntexWinter2024Context context, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -30,6 +32,13 @@ namespace IntexWinter2024.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            // First, verify the reCAPTCHA response
+            if (!await RecaptchaIsValid(model.RecaptchaToken))
+            {
+                ModelState.AddModelError(string.Empty, "reCAPTCHA validation failed");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
@@ -37,10 +46,9 @@ namespace IntexWinter2024.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Assume _context is your ApplicationDbContext instance
                     var customer = new Customer
                     {
-                        UserId = user.Id, // Assuming Customer has a UserId field for association
+                        UserId = user.Id, // Linking the newly created user with the customer
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         BirthDate = model.BirthDate,
@@ -54,12 +62,28 @@ namespace IntexWinter2024.Controllers
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
             }
+
+            // If we get here, something was invalid
             return View(model);
+        }
+
+        private async Task<bool> RecaptchaIsValid(string recaptchaToken)
+        {
+            var client = new HttpClient();
+            var test = recaptchaToken;
+            var secret = _configuration["Security:reCAPTCHA:SecretKey"];
+            var response = await client.PostAsync(
+                $"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={recaptchaToken}",
+                new StringContent(string.Empty));
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            dynamic jsonData = Newtonsoft.Json.JsonConvert.DeserializeObject(jsonResponse);
+            return jsonData.success;
         }
 
         [HttpGet]
