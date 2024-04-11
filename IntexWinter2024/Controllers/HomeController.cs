@@ -122,17 +122,45 @@ namespace IntexWinter2024.Controllers
         //            // Optional: For debugging, printing the added order's info
         //            //Console.WriteLine($"Adding Order Amount: {order.Amount} - Date: {order.Date} - Fraud: {order.Fraud}");
 
-        //            _context.ProductCategories.Add(order);
-        //        }
+        public IActionResult AdminLandingPage()
+        {
+            return View();
+        }
 
-        //        _context.SaveChanges(); // Saves all added orders to the database
-        //    }
+        public IActionResult OrderReview()
+        {
+            return View();
+        }
 
-        //    return View();
-        //}
+        public IActionResult ProductDetails(int productId)
+        {
+            var productToView = _repo.Products
+                .SingleOrDefault(x => x.ProductId == productId);
+            
+            if (productToView == null)
+            {
+                return NotFound();
+            }
+            
+            return View(productToView);
+        }
 
+        public IActionResult ProductEdit()
+        {
+            return View();
+        }
+
+        public IActionResult UserEdit()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        
+        public IActionResult AboutUs()
         {
             return View();
         }

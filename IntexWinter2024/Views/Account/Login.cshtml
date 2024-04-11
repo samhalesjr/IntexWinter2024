@@ -1,7 +1,11 @@
 ﻿@model LoginViewModel
 
-<h2>Login</h2>
-<div class="login-container">
+
+<div class="container">
+    <div class="container-header">
+        <h2>Login</h2>
+    </div>
+    <br />
     <form asp-action="Login">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -22,9 +26,14 @@
             <label asp-for="RememberMe" class="form-check-label">Remember me?</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div style="display: flex; justify-content: center;">
+            <button type="submit" class="btn btn-primary" style="padding: 5px 12px; font-family: sans-serif; background-color: #317287">Login</button>
+        </div>
     </form>
-    <p>Don't have an account? <a asp-controller="Account" asp-action="Register">Sign up</a></p>
+    <br />
+    <p style="text-align: center;">Don't have an account? <a asp-controller="Account" asp-action="Register"><b>Sign up</b></a></p>
+    <h6>------OR-------</h6>
+    <a class="btn btn-danger" asp-area="" asp-controller="Account" asp-action="LoginWithGoogle">Continue with Google</a>
 </div>
 
 
