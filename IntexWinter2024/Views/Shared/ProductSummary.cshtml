@@ -6,7 +6,7 @@
         <li>$@Model.Products.Price</li>
         <li>@Model.Products.PrimaryColor</li>
         <li>Year Released: @Model.Products.Year</li>
-        @if (Model.Categories.Count == 1)
+        @if (Model.Categories.Count() == 1)
         {
             <li>Category: @Model.Categories.First()</li>
         }
