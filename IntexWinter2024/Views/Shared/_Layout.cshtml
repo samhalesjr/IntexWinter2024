@@ -37,11 +37,14 @@
                 </form>
             }
             <div>
-                <a asp-area="" asp-controller="Home" asp-action="AdminLandingPage"><i class="fa-solid fa-user-tie"></i></a>
-            </div>
-            <div>
                 <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
             </div>
+            @if (User.Identity.IsAuthenticated && ((string)ViewData["ApplicationUserRole"] == "Admin"))
+            {
+                <div>
+                    <a asp-area="" asp-controller="Home" asp-action="AdminLandingPage"><i class="fa-solid fa-user-tie"></i></a>
+                </div>
+            }
         </nav>
     </header>
     <div class="render-body-container">
