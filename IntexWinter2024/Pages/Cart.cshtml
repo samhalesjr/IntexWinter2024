@@ -1,0 +1,44 @@
+﻿@page
+@model IntexWinter2024.Pages.CartModel
+@{
+}
+
+<h2>Cart</h2>
+
+<table class="table table-bordered table-striped">
+    
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+        {
+            <tr>
+                <td>@l.Product.ProductId</td>
+                <td>@l.Product.Name</td>
+                <td>@l.Product.Price</td>
+                <td>@((l.Quantity * l.Product.Price).ToString("c"))</td>
+            </tr>
+        }
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+        </tr>
+    </tfoot>
+</table>
+
+@*    
+    <form id="@Model.ProductId" method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="ProductId" />
+        <button type="submit">Add To Cart</button>
+    </form>
+*@

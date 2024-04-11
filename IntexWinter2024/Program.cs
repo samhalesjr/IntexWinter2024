@@ -21,6 +21,11 @@ namespace IntexWinter2024
 
             builder.Services.AddScoped<IIntexWinter2024Repository, EFIntexWinter2024Repository>();
 
+            builder.Services.AddRazorPages();
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+
             // Added for user and session management
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IntexWinter2024Context>()
@@ -47,6 +52,8 @@ namespace IntexWinter2024
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -59,6 +66,8 @@ namespace IntexWinter2024
             app.MapControllerRoute("pagination", "/Home/Browse/Products/{pageNum}", new {Controller = "Home", Action = "Browse"});
 
             app.MapDefaultControllerRoute();
+
+            app.MapRazorPages();
 
             app.Run();
         }
