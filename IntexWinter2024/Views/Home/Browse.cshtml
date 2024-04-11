@@ -2,12 +2,21 @@
     ViewData["Title"] = "Products";
 }
 @model ProductsListViewModel
+<div class="row m-1 p-1">
+    <div class="col-2">
+        <p>Filter By Category:</p><br/>
+        <vc:product-categories/>
+    </div>
+    <div class="container col-10">
+        @foreach (ProductCategoryViewModel p in Model.Products)
+        {
+            <partial name="ProductSummary" model="p"/>
+        
+        }
+        
+        <div page-model="@Model.PaginationInfo" page-action="Browse" page-class-enabled="true" page-class="btn" 
+             page-class-normal="btn-outline-dark" page-class-selected="btn-primary" class="btn-group pull-right m-1"></div>
+    </div>
+</div>
 
-@foreach (Product p in Model.Products)
-{
-    <partial name="ProductSummary" model="p"/>
 
-}
-
-<div page-model="@Model.PaginationInfo" page-action="Browse" page-class-enabled="true" page-class="btn" 
-     page-class-normal="btn-outline-dark" page-class-selected="btn-primary" class="btn-group pull-right m-1"></div>

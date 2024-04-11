@@ -26,7 +26,7 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
-        public IActionResult Browse(int pageNum)
+        public IActionResult Browse(int pageNum, string productCategory)
         {
             if (pageNum <= 0) 
             {
@@ -34,50 +34,51 @@ namespace IntexWinter2024.Controllers
             }
 
             int pageSize = 5;
+            
+            // Here we're differing from the videos. We need to because the differing tables.
+            // Query products from the repository
+            var productsQuery = _repo.Products;
 
-            // differing from videos, because we split categories into different tables, we'll need to account for that here.
-            var productList = new ProductsListViewModel
+            // Filter products based on the selected category
+            if (!string.IsNullOrEmpty(productCategory))
             {
-                Products = _repo.Products
-                    .OrderBy(x => x.Name)
-                    .Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize),
+                productsQuery = productsQuery
+                    .Where(p => _repo.ProductCategories
+                        .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+            }
+
+            // Order the products by ProductId
+            productsQuery = productsQuery.OrderBy(p => p.ProductId);
+
+            // Paginate the filtered and ordered products
+            var products = productsQuery
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            // Create the view model
+            var lego = new ProductsListViewModel
+            {
+                Products = products.Select(p => new ProductCategoryViewModel
+                {
+                    Products = p,
+                    Categories = _repo.ProductCategories
+                        .Where(pc => pc.ProductId == p.ProductId)
+                        .Select(pc => pc.CategoryName)
+                        .ToList()
+                }).ToList(),
 
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ItemsPerPage = pageSize,
-                    TotalItems = _repo.Products.Count()
+                    TotalItems = productsQuery.Count() // Count the total filtered products
                 }
             };
-
-            //var products = _repo.Products
-            //    .OrderBy(x => x.ProductId)
-            //    .Skip((pageNum - 1) * pageSize)
-            //    .Take(pageSize)
-            //    .ToList();
-            
-            //var lego = new ProductsListViewModel
-            //{
-            //    Product = (IQueryable<Product>)products.Select(p => new ProductViewModel
-            //    {
-            //        Product = (IQueryable<Product>)p,
-            //        Categories = _repo.ProductCategories
-            //            .Where(pc => pc.ProductId == p.ProductId)
-            //            .Select(pc => pc.CategoryName)
-            //            .ToList()
-            //    }).ToList(),
-
-            //    PaginationInfo = new PaginationInfo
-            //    {
-            //        CurrentPage = pageNum,
-            //        ItemsPerPage = pageSize,
-            //        TotalItems = _repo.Products.Count()
-            //    }
-            //};
-            
-            return View(productList);
+    
+            return View(lego);
         }
+
 
         //public IActionResult Index()
         //{
