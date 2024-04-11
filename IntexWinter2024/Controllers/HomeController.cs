@@ -36,6 +36,19 @@ namespace IntexWinter2024.Controllers
             return View();
         }
 
+        public IActionResult ProductDetails(int productId)
+        {
+            var productToView = _repo.Products
+                .SingleOrDefault(x => x.ProductId == productId);
+            
+            if (productToView == null)
+            {
+                return NotFound();
+            }
+            
+            return View(productToView);
+        }
+
         public IActionResult ProductEdit()
         {
             return View();
