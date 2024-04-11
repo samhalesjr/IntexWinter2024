@@ -8,6 +8,29 @@ html {
     }
 }
 
+table {
+    margin: auto;
+    text-align: center;
+}
+
+thead {
+    background-color: #D9D9D9;
+}
+
+tbody {
+    background-color: #ECECEC;
+}
+
+td {
+    border: 1px solid black;
+    padding: 2px 5px;
+}
+
+.detail-item {
+    margin: auto;
+    text-align: left;
+}
+
 footer .footer-container {
     margin: auto;
     text-align: center;

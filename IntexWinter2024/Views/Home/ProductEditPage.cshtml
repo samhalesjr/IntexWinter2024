@@ -1,0 +1,77 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Product
+
+<form method="post" asp-action="ProductEdit" asp-controller="Home">
+
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="container">
+        <div class="container-header">
+            <h2>Product Info</h2>
+        </div>
+        <div class="product-details">
+            <!-- Name displayed in bold, larger text -->
+            <br />
+            <div class="detail-item">
+                <label asp-for="Name">Product Name:</label>
+                <br>
+                <input asp-for="Name" type="text" />
+            </div>
+            <br />
+            <!-- Other product details -->
+            <div class="detail-item">
+                <label asp-for="Year">Year:</label>
+                <br>
+                <input asp-for="Year" type="number" min="1900" max="2024" step="1" />
+            </div>
+            <br> <!-- Add a break between each detail-item -->
+            <div class="detail-item">
+                <label asp-for="NumParts">Number of Parts:</label>
+                <br>
+                <input asp-for="NumParts" type="number" min="0" step="1" />
+            </div>
+            <br>
+            <div class="detail-item">
+                <label asp-for="Price">Price:</label>
+                <br>
+                <input asp-for="Price" type="number" min="0" />
+            </div>
+            <br>
+            <div class="detail-item">
+                <label asp-for="PrimaryColor">Primary Color:</label>
+                <br>
+                <input asp-for="PrimaryColor" type="text" />
+            </div>
+            <br>
+            <div class="detail-item">
+                <label asp-for="SecondaryColor">Secondary Color:</label>
+                <br>
+                <input asp-for="SecondaryColor" type="text" />
+            </div>
+            <br>
+            <div class="detail-item">
+                <label asp-for="ImgLink">Image Link:</label>
+                <br>
+                <input asp-for="ImgLink" type="text" />
+            </div>
+            <br>
+            <!-- Description -->
+            <div class="detail-item">
+                <label asp-for="Description">Description:</label>
+                <br>
+                <textarea asp-for="Description" rows="5" maxlength="1000" style="width: 100%;"></textarea>
+            </div>
+            <br />
+        </div>
+
+        <button type="submit" style="margin: auto; text-align: center; background-color: #317287; color: white;">Submit Changes</button>
+
+    </div>
+</form>
+
+

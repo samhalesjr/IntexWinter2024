@@ -3,3 +3,35 @@
 *@
 @{
 }
+
+@model List<Customer>
+
+<table>
+    <thead>
+        <tr>
+            <td>Customer ID</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Birth Date</td>
+            <td>Country of Residence</td>
+            <td>Gender</td>
+            <!--<td>Role</td>-->
+            <td>Edit</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Customer c in Model)
+        {
+            <tr>
+                <td>@c.CustomerId</td>
+                <td>@c.FirstName</td>
+                <td>@c.LastName</td>
+                <td>@c.BirthDate</td>
+                <td>@c.CountryOfResidence</td>
+                <td>@c.Gender</td>
+                <!--<td>@c.Role</td>-->
+                <td><a class="btn btn-danger" asp-controller="Home" asp-action="UserEditPage" asp-route-id="@c.CustomerId" style="background-color: #317287">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
