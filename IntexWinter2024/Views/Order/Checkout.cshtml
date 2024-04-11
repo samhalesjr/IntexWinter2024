@@ -1,0 +1,56 @@
+﻿@model Order
+
+<h2>Check out</h2>
+
+<form asp-action="Checkout" method="post">
+    @*<input type="hidden" asp-for="CustomerId" value="CustomerId" />*@
+    <input type="hidden" asp-for="Date" value="@DateTime.Today.ToString("MM/dd/yyy")" />
+    <input type="hidden" asp-for="DayOfWeek" value="@DateTime.Now.ToString("ddd")" />
+    @*<input type="hidden" asp-for="Time" value="@DateTime.Now.ToString("HH")" />*@
+    <input type="hidden" asp-for="EntryMode" value="CVC" />
+    <input type="hidden" asp-for="Amount" value="1" />
+    <input type="hidden" asp-for="TypeOfTransaction" value="Online" />
+    <input type="hidden" asp-for="CountryOfTransaction" value="test" />
+    <input type="hidden" asp-for="Bank" value="test" />
+    <input type="hidden" asp-for="TypeOfCard" value="test" />
+    <h3>Ship to</h3>
+    <div class="form-group">
+        <label>First Name: </label>
+        <input class="form-control" />
+    </div>
+    <h3>Address</h3>
+    <div class="form-group">
+        <label>Line 1:</label>
+        <input class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Line 2:</label>
+        <input class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>City:</label>
+        <input class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>State:</label>
+        <input class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Zip:</label>
+        <input class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Country:</label>
+        <input class="form-control" asp-for="ShippingAddress" />
+    </div>
+    <h3>Options</h3>
+    <div class="checkbox">
+        <label>
+            <input /> Gift wrap these items
+        </label>
+    </div>
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit"
+               value="Complete Order" />
+    </div>
+</form>
