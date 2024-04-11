@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntexWinter2024.Models
 {
@@ -53,7 +54,7 @@ namespace IntexWinter2024.Models
         public Customer GetCustomer(ClaimsPrincipal user)
         {
             var userId = _userManager.GetUserId(user); // Get the current user's ID
-            var customer = _context.Customers.FirstOrDefault(c => c.UserId == userId);
+            var customer = _context.Customers.Include(c => c.Role).FirstOrDefault(c => c.UserId == userId);
             return customer;
         }
     }

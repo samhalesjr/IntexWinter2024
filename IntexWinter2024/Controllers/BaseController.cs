@@ -24,14 +24,13 @@ namespace IntexWinter2024.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var customer = _repo.GetCustomer(User);
-                //ViewData["Customer"] = customer;
-                //ViewData["CustomerRole"] = customer.Role;
-                //var userId = _userManager.GetUserId(User);
-                //var customer = _repo.GetCustomerById(userId);  // Assuming there's a method to fetch customer by userId
                 if (customer != null)
                 {
-                    ViewData["Customer"] = customer;
-                    ViewData["CustomerRole"] = customer.Role;
+                    ViewData["CustomerId"] = customer.CustomerId;
+                    if (customer.Role != null)
+                    {
+                        ViewData["ApplicationUserRole"] = customer.Role.Name;
+                    }
                 }
             }
         }
