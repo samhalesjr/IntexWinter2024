@@ -5,9 +5,9 @@
     ViewData["Title"] = "Products";
 }
 @using IntexWinter2024.Controllers
-@model IntexWinter2024.Controllers.HomeController.ProductsListViewModel
+@model ProductsListViewModel
 
-@foreach (HomeController.ProductViewModel p in Model.Products)
+@foreach (ProductViewModel p in Model.Products)
 {
     <partial name="ProductSummary" model="p"/>
 
