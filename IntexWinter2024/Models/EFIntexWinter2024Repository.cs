@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Linq;
+
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace IntexWinter2024.Models
@@ -18,6 +20,23 @@ namespace IntexWinter2024.Models
         public IQueryable<LineItem> LineItems => _context.LineItems;
         public IQueryable<Role> Roles => _context.Roles;
         public IQueryable<ProductCategory> ProductCategories => _context.ProductCategories;
+
+        public List<string> GetCategoriesForProduct(int productId)
+        {
+            return _context.ProductCategories
+                .Where(pc => pc.ProductId == productId)
+                .Select(pc => pc.CategoryName)
+                .Distinct()
+                .ToList();
+        }
+
+        public List<string> GetAllCategories()
+        {
+            return _context.ProductCategories
+                .Select(pc => pc.CategoryName)
+                .Distinct()
+                .ToList();
+        }
         public Customer GetCustomer(ClaimsPrincipal user)
         {
             var userId = _userManager.GetUserId(user); // Get the current user's ID
