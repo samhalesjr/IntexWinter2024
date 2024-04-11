@@ -26,6 +26,9 @@ namespace IntexWinter2024
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
 
+            builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // Added for user and session management
             builder.Services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<IntexWinter2024Context>()
