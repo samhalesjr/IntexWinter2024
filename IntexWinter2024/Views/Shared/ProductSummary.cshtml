@@ -1,3 +1,4 @@
+@using IntexWinter2024.Infrastructure
 @model IntexWinter2024.Controllers.HomeController.ProductViewModel
 
 <div class="card m-1 p-1">
@@ -15,4 +16,9 @@
             <li>Categories: @string.Join(", ", Model.Categories)</li>
         }
     </ul>
+    <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="Product.ProductId" />
+        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+        <button type="submit" class="btn btn-success">Add To Cart</button>
+    </form>
 </div>
