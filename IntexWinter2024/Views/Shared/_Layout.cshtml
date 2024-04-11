@@ -23,6 +23,7 @@
             <a asp-controller="Home" asp-action="Browse">Browse Kits</a>
             <a asp-controller="Home" asp-action="AboutUs">About Us</a>
             <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a asp-controller="Home" asp-action="Profile" asp-route-id="@ViewData["CustomerId"]">Profile</a>
           
             @if (!User.Identity.IsAuthenticated)
             {

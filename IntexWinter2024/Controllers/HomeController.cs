@@ -124,6 +124,14 @@ namespace IntexWinter2024.Controllers
         //            // Optional: For debugging, printing the added order's info
         //            //Console.WriteLine($"Adding Order Amount: {order.Amount} - Date: {order.Date} - Fraud: {order.Fraud}");
 
+        public IActionResult Profile(int id)
+        {
+            var customerInfo = _repo.Customers
+                .Where(x => x.CustomerId == id);
+
+            return View(customerInfo);
+        }
+
         public IActionResult AdminLandingPage()
         {
             return View();
