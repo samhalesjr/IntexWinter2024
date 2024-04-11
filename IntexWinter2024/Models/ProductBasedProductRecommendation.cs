@@ -15,7 +15,7 @@ namespace IntexWinter2024.Models
 
         [ForeignKey("RecommendationOne")]
         public int RecommendationOneProductId { get; set; }
-        public virtual Product RecommendationOne { get; set; }
+        public Product RecommendationOne { get; set; }
 
         [ForeignKey("RecommendationTwo")]
         public int RecommendationTwoProductId { get; set; }

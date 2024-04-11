@@ -7,6 +7,7 @@ using Microsoft.VisualBasic.FileIO;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace IntexWinter2024.Controllers
@@ -124,6 +125,14 @@ namespace IntexWinter2024.Controllers
         //            // Optional: For debugging, printing the added order's info
         //            //Console.WriteLine($"Adding Order Amount: {order.Amount} - Date: {order.Date} - Fraud: {order.Fraud}");
 
+        public IActionResult Profile(int id)
+        {
+            var customerInfo = _repo.Customers
+                .Where(x => x.CustomerId == id);
+
+            return View(customerInfo);
+        }
+
         public IActionResult AdminLandingPage()
         {
             return View();
@@ -148,7 +157,42 @@ namespace IntexWinter2024.Controllers
                 return NotFound();
             }
             
-            return View(productToView);
+            var productCategoryViewModel = new ProductCategoryViewModel
+            {
+                Product = productToView,
+                Categories = _repo.ProductCategories
+                    .Where(pc => pc.ProductId == productToView.ProductId)
+                    .Select(pc => pc.CategoryName)
+                    .ToList()
+            };
+            // Retrieve product recommendations
+            var productRecommendations = _repo.ProductBasedProductRecommendations
+                .Include(r => r.RecommendationOne)
+                .Include(r => r.RecommendationTwo)
+                .Include(r => r.RecommendationThree)
+                .Include(r => r.RecommendationFour)
+                .Include(r => r.RecommendationFive)
+                .Include(r => r.RecommendationSix)
+                .SingleOrDefault(r => r.ProductId == productId);
+
+            // Construct a list of recommended products
+            var recommendedProducts = new List<Product>
+            {
+                productRecommendations.RecommendationOne,
+                productRecommendations.RecommendationTwo,
+                productRecommendations.RecommendationThree,
+                productRecommendations.RecommendationFour,
+                productRecommendations.RecommendationFive,
+                productRecommendations.RecommendationSix
+            };
+
+            // Construct an instance of ProductDetailsViewModel
+            var viewModel = new ProductDetailsViewModel
+            {
+                ProductCategory = productCategoryViewModel,
+                ProductBasedProductRecommendation = recommendedProducts
+            };
+            return View(viewModel);
         }
 
         public IActionResult ProductEdit()

@@ -28,7 +28,7 @@ namespace IntexWinter2024.Models
         public bool MfaEnabled { get; set; } = false;
 
         [ForeignKey("Role")]
-        public int? RoleId { get; set; }
+        public int RoleId { get; set; } = 2;
         public virtual Role Role { get; set; }
 
         // Foreign key for ASP.NET Core Identity User
