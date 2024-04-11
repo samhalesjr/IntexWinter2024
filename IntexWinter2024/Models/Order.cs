@@ -1,15 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace IntexWinter2024.Models
 {
     public class Order
     {
         [Key]
+        [BindNever]
         public int TransactionId { get; set; }
 
+        [BindNever]
+        public List<LineItem> Lines { get; set; } = new List<LineItem>(); //This is an ICollection<> in the book. The controller couldn't convert the ICollection to a List 
+
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        //public int CustomerId { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
@@ -35,6 +40,6 @@ namespace IntexWinter2024.Models
         public bool Fraud { get; set; }
 
         // Navigation property to the Customer
-        public virtual Customer Customer { get; set; }
+        //public virtual Customer Customer { get; set; }
     }
 }
