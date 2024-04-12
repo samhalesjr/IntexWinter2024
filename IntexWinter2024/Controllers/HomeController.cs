@@ -31,7 +31,65 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
-        public IActionResult Browse(int pageNum, string productCategory)
+        [HttpGet]
+        public IActionResult Browse(int pageNum)
+        {
+            if (pageNum <= 0)
+            {
+                pageNum = 1;
+            }
+
+            int pageSize = 5; // this needs to change to accept input from the user as to what the page size should be
+
+            var productsQuery = _repo.Products;
+
+            // Order the products by ProductId
+            productsQuery = productsQuery.OrderBy(p => p.ProductId);
+
+            // Paginate the filtered and ordered products
+            var products = productsQuery
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            // Instantiate a list of ProductViewModels to add the filtered products to
+            var productViewModels = new List<ProductCategoryViewModel>();
+
+            foreach (var product in products)
+            {
+                var categories = _repo.GetCategoriesForProduct(product.ProductId);
+
+                var productViewModel = new ProductCategoryViewModel
+                {
+                    Product = product,
+                    Categories = categories
+                };
+
+                productViewModels.Add(productViewModel);
+            }
+
+            // Create the view model
+            var lego = new ProductsListViewModel
+            {
+                Categories = _repo.GetAllCategories(),
+
+                PrimaryColors = _repo.GetAllPrimaryColors(),
+
+                PaginationInfo = new PaginationInfo()
+                {
+                    CurrentPage = pageNum,
+                    ItemsPerPage = pageSize,
+                    TotalItems = productsQuery.Count()// Count the total filtered products
+                },
+
+                ProductCategoryViewModels = productViewModels
+            };
+
+            return View(lego);
+        }
+
+        [HttpPost]
+        public IActionResult Browse(int pageNum, string productCategory, string primaryColor)
         {
             if (pageNum <= 0)
             {
@@ -44,12 +102,15 @@ namespace IntexWinter2024.Controllers
             // Query products from the repository
             var productsQuery = _repo.Products;
 
-            // Filter products based on the selected category
-            if (!string.IsNullOrEmpty(productCategory))
+            // Filter products based on the selected category and/or primary color
+            if (!string.IsNullOrEmpty(productCategory) || !string.IsNullOrEmpty(primaryColor))
             {
                 productsQuery = productsQuery
-                    .Where(p => _repo.ProductCategories
-                        .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+                    .Where(p => 
+                        (!string.IsNullOrEmpty(productCategory) && _repo.ProductCategories
+                            .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory)) ||
+                        (!string.IsNullOrEmpty(primaryColor) && p.PrimaryColor == primaryColor)
+                     );
             }
 
             // Order the products by ProductId
@@ -61,6 +122,7 @@ namespace IntexWinter2024.Controllers
                 .Take(pageSize)
                 .ToList();
 
+            // Instantiate a list of ProductViewModels to add the filtered products to
             var productViewModels = new List<ProductCategoryViewModel>();
 
             foreach (var product in products)
@@ -80,6 +142,8 @@ namespace IntexWinter2024.Controllers
             var lego = new ProductsListViewModel
             { 
                 Categories = _repo.GetAllCategories(),
+
+                PrimaryColors = _repo.GetAllPrimaryColors(),
 
                 PaginationInfo = new PaginationInfo()
                 {
