@@ -45,15 +45,15 @@
                     </button>
                 </form>
             }
-            <div>
+            @* <div>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-6 navbar-text text-end">
+                        <div class="col-6 navbar-text text-end"> *@
                             <vc:cart-summary />
-                        </div>
+                        @* </ div>
                     </div>
                 </div>
-            </div>
+            </div> *@
             @if (User.Identity.IsAuthenticated && ((string)ViewData["ApplicationUserRole"] == "Admin"))
             {
                 <div>
