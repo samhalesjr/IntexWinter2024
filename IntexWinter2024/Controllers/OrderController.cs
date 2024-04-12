@@ -290,11 +290,6 @@ namespace IntexWinter2024.Controllers
                 // return View("Order");
                 
                 
-                
-                
-                
-                
-                
                 _repo.SaveOrder(order);
                 cart.ClearCart();
 
