@@ -23,6 +23,26 @@
                 <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Browse">Reset Filters</a>
             </div>
         </form>
+        <br />
+        <br />
+        <div class="row">
+            <form asp-controller="Home" asp-action="Browse" method="get">
+                <input type="hidden" value="5" name="pageSize" />
+                <button class="btn btn-outline-secondary">Show 5</button>
+            </form>
+        </div>
+        <div class="row">
+            <form asp-controller="Home" asp-action="Browse" method="get">
+                <input type="hidden" value="10" name="pageSize" />
+                <button class="btn btn-outline-secondary">Show 10</button>
+            </form>
+        </div>
+        <div class="row">
+            <form asp-controller="Home" asp-action="Browse" method="get">
+                <input type="hidden" value="20" name="pageSize" />
+                <button class="btn btn-outline-secondary">Show 20</button>
+            </form>
+        </div>
     </div>
     <div class="col-10">
         @foreach (ProductCategoryViewModel p in Model.ProductCategoryViewModels)
