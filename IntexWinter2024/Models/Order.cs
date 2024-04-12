@@ -40,5 +40,7 @@ namespace IntexWinter2024.Models
 
         public bool Fraud { get; set; }
 
+        public bool Flagged { get; set; } = false;
+
     }
 }
