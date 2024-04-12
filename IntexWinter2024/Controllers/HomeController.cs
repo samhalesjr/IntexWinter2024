@@ -168,7 +168,7 @@ namespace IntexWinter2024.Controllers
             if (((string)ViewData["ApplicationUserRole"]) == "Admin")
             {
                 var fraudulentOrders = _repo.Orders
-                    .Where(x => x.Fraud == true)
+                    .Where(x => x.Flagged == true)
                     .ToList();
 
                 return View(fraudulentOrders);
@@ -225,12 +225,15 @@ namespace IntexWinter2024.Controllers
                     ProductBasedProductRecommendation = recommendedProducts
                 };
             }
-
-            viewModel = new ProductDetailsViewModel
+            else
             {
-                ProductCategory = productCategoryViewModel,
-                ProductBasedProductRecommendation = null
-            };
+                viewModel = new ProductDetailsViewModel
+                {
+                    ProductCategory = productCategoryViewModel,
+                    ProductBasedProductRecommendation = null
+                };
+            }
+
 
             return View(viewModel);
         }
