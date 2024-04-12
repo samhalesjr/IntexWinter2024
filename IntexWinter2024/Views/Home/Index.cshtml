@@ -65,9 +65,9 @@ else if (User.Identity.IsAuthenticated)
                             <!-- Set background color -->
                             <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@p.ProductId" style="width: auto;">
                                 <h4>@p.Name</h4>
+                                <img src="@p.ImgLink" style="width: 250px; height: 200px; background-color: #F0F4FF;" />
                             </a>
 
-                            <img src="@p.ImgLink" style="width: 250px; height: 200px; background-color: #F0F4FF;" />
 
                             <div style="background-color: #F0F4FF;">
                                 <!-- Set background color and add padding -->
