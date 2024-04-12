@@ -15,6 +15,7 @@ namespace IntexWinter2024.Models
 
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
@@ -39,9 +40,5 @@ namespace IntexWinter2024.Models
 
         public bool Fraud { get; set; }
 
-        // Navigation property to the Customer
-        public virtual Customer Customer { get; set; }
-
-        //public int TempCustomerId { get; set; }
     }
 }
