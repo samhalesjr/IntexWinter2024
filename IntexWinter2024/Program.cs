@@ -113,8 +113,8 @@ namespace IntexWinter2024
                 context.Response.Headers.Add("Content-Security-Policy",
                     "default-src 'self'; " +
                     "script-src 'self'; " +
-                    "style-src 'self' 'unsafe-inline'; " + // Note: 'unsafe-inline' for styles can be a security risk
-                    "img-src 'self' m.media-amazon.com images.brickset.com www.lego.com;");
+                    "style-src 'self' 'unsafe-inline'; " +
+                    "img-src 'self' m.media-amazon.com images.brickset.com www.lego.com www.brickeconomy.com;");
                 await next();
             });
 
