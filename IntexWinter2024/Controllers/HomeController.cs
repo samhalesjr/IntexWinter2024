@@ -290,6 +290,27 @@ namespace IntexWinter2024.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult DeleteProduct(int id)
+        {
+            var productToDelete = _repo.Products
+                .Single(x => x.ProductId == id);
+
+            return View(productToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(Product product)
+        {
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                _repo.DeleteProduct(product);
+
+                return RedirectToAction("ProductEdit");
+            }
+            else return RedirectToAction("Index");
+        }
+
         public IActionResult UserEdit()
         {
             if (((string)ViewData["ApplicationUserRole"]) == "Admin")
@@ -324,6 +345,27 @@ namespace IntexWinter2024.Controllers
             if (((string)ViewData["ApplicationUserRole"]) == "Admin")
             {
                 _repo.EditCustomer(updatedInfo);
+
+                return RedirectToAction("UserEdit");
+            }
+            else return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteUser(int id)
+        {
+            var userToDelete = _repo.Customers
+                .Single(x => x.CustomerId == id);
+
+            return View(userToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUser(Customer user)
+        {
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                _repo.DeleteUser(user);
 
                 return RedirectToAction("UserEdit");
             }

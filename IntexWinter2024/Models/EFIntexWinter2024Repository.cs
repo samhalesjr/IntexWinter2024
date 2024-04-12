@@ -50,10 +50,24 @@ namespace IntexWinter2024.Models
             _context.SaveChanges();
         }
 
-        // Method that saves changes made to a customer's information
+        // Method that deletes a product's information
+        public void DeleteProduct(Product product)
+        {
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+        }
+
+        // Method that saves changes made to a user's information
         public void EditCustomer(Customer updatedInfo)
         {
             _context.Update(updatedInfo);
+            _context.SaveChanges();
+        }
+
+        // Method that deletes a user's information
+        public void DeleteUser(Customer customer)
+        {
+            _context.Customers.Remove(customer);
             _context.SaveChanges();
         }
 

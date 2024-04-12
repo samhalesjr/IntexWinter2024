@@ -17,7 +17,9 @@ namespace IntexWinter2024.Models
         public IQueryable<Role> Roles { get; }
         public IQueryable<ProductCategory> ProductCategories { get; }
         public void EditProduct(Product updatedInfo);
+        public void DeleteProduct(Product product);
         public void EditCustomer(Customer updatedInfo);
+        public void DeleteUser(Customer customer);
         public List<string> GetAllCategories();
         public List<string> GetCategoriesForProduct(int productId);
         public List<string> GetAllPrimaryColors();
