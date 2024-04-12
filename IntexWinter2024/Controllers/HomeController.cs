@@ -140,16 +140,24 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult AdminLandingPage()
         {
-            return View();
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                return View();
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult OrderReview()
         {
-            var fraudulentOrders = _repo.Orders
-                .Where(x => x.Fraud == true)
-                .ToList();
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var fraudulentOrders = _repo.Orders
+                    .Where(x => x.Fraud == true)
+                    .ToList();
 
-            return View(fraudulentOrders);
+                return View(fraudulentOrders);
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult ProductDetails(int productId)
@@ -202,46 +210,65 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult ProductEdit()
         {
-            var products = _repo.Products
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var products = _repo.Products
                 .ToList();
 
-            return View(products);
+                return View(products);
+            }
+            else return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult ProductEditPage(int id)
         {
-            var productToEdit = _repo.Products
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var productToEdit = _repo.Products
                 .SingleOrDefault(x => x.ProductId == id);
 
-            return View(productToEdit);
+                return View(productToEdit);
+            }
+            else return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult ProductEdit(Product updatedInfo)
         {
-            _repo.EditProduct(updatedInfo);
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                _repo.EditProduct(updatedInfo);
 
-            return RedirectToAction("ProductEdit");
+                return RedirectToAction("ProductEdit");
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult UserEdit()
         {
-            var customers = _repo.Customers
-                .ToList();
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var customers = _repo.Customers
+                    .ToList();
 
-            return View(customers);
+                return View(customers);
+            }
+            else return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult UserEditPage(int id)
         {
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var userToEdit = _repo.Customers
+                    .Include(x => x.Role)
+                    .SingleOrDefault(x => x.CustomerId == id);
 
-            var userToEdit = _repo.Customers
-                .Include(x => x.Role)
-                .SingleOrDefault(x => x.CustomerId == id);
-
-            return View(userToEdit);
+                return View(userToEdit);
+            }
+            else return RedirectToAction("Index");
 
 
         }
@@ -249,9 +276,13 @@ namespace IntexWinter2024.Controllers
         [HttpPost]
         public IActionResult UserEdit(Customer updatedInfo)
         {
-            _repo.EditCustomer(updatedInfo);
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                _repo.EditCustomer(updatedInfo);
 
-            return RedirectToAction("UserEdit");
+                return RedirectToAction("UserEdit");
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
