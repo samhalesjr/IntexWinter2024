@@ -1,5 +1,6 @@
 ﻿using IntexWinter2024.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static IntexWinter2024.Models.Cart;
 
 namespace IntexWinter2024.Controllers
@@ -38,6 +39,10 @@ namespace IntexWinter2024.Controllers
                 );
             }
 
+            if (ModelState.GetFieldValidationState("CustomerId") == ModelValidationState.Valid && ModelState.GetFieldValidationState("Customer") == ModelValidationState.Invalid)
+            {
+                ModelState.Remove("Customer"); // Remove Customer from model state checking if it's not needed
+            }
             if (ModelState.IsValid)
             {
 
