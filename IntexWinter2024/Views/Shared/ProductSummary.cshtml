@@ -20,7 +20,7 @@
         <li>Main color: @Model.Product.PrimaryColor</li>
     </ul>
     <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
-        <input type="hidden" asp-for="@Model.Product.ProductId" />
+        <input type="hidden" asp-for="@Model.Product.ProductId" name="productId"/>
         <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
         <button type="submit" class="btn btn-success">Add To Cart</button>
     </form>

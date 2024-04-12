@@ -28,9 +28,6 @@ namespace IntexWinter2024.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-            //order.Date = DateTime.Now;
-            //order.DayOfWeek = order.Date.ToString("ddd");
-
 
             if (cart.Lines.Count() == 0)
             {
