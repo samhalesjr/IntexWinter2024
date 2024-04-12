@@ -5,14 +5,23 @@
 }
 
 @model Customer
+<div class="container">
+    <div class="container-header" style="background-color: red;">
+        <h2>Delete Confirmation</h2>
+    </div>
+    <br />
+    <h3 style="text-align: center; font-family: sans-serif;">Confirm Deletion</h3>
+    <br />
+    <b><h2 style="text-align: center; font-family: sans-serif;">@Model.LastName, @Model.FirstName</h2></b>
+    <div style="text-align: center;">
+    <br />
+        <form method="post">
 
-<h2>Confirm Deletion</h2>
-<h3>@Model.LastName, @Model.FirstName</h3>
+            <input type="hidden" asp-for="@Model.CustomerId" />
 
-<form method="post">
-
-    <input type="hidden" asp-for="@Model.CustomerId" />
-
-    <button type="submit">Delete</button>
-    <a class="btn btn-danger" asp-controller="Home" asp-action="UserEdit">Cancel</a>
-</form>
+            <a class="btn btn-danger" style="text-align: center; font-family: sans-serif; background-color: red; border: none; color: white;"><button type="submit" style="background-color: red; border: none; color: white;">Delete</button></a>
+            <a class="btn btn-danger" asp-controller="Home" asp-action="UserEdit" style="font-family: sans-serif; background-color: #949494; border: none;">Cancel</a>
+        </form>
+    </div>
+    
+</div>
