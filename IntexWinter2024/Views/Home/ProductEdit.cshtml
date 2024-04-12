@@ -19,6 +19,7 @@
             <td>Secondary Color</td>
             <td>Description</td>
             <td>Edit</td>
+            <td>Delete</td>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +42,12 @@
                         @p.Description
                     </div>
                 </td>
-                <td><a class="btn btn-danger" asp-controller="Home" asp-action="ProductEditPage" asp-route-id="@p.ProductId" style="background-color: #317287">Edit</a></td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Home" asp-action="ProductEditPage" asp-route-id="@p.ProductId" style="background-color: #317287;">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Home" asp-action="DeleteProduct" asp-route-id="@p.ProductId" style="background-color: red;">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
