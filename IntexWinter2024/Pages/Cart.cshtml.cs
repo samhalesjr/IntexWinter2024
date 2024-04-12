@@ -25,16 +25,21 @@ namespace IntexWinter2024.Pages
             ReturnUrl = returnUrl ?? "/";
         }
 
-        public IActionResult OnPost(int productId, string returnUrl)
+        public IActionResult OnPost(int productId, string returnUrl, int quantity)
         {
             //Create an instance of a product to pass to the cart
             Product product = _repo.Products
                 .FirstOrDefault(x => x.ProductId == productId);
             
-            if (product != null)
+            if (product != null && quantity == 0)
             {
                 //Add the item to the cart, passing the productId and the quantity (set to 1, but could change if we want to choose how many items are added to the cart)
                 Cart.AddItem(product, 1);
+            }
+
+            if (product != null && quantity > 0)
+            {
+                Cart.AddItem(product, quantity);
             }
 
             return RedirectToPage (new {returnUrl = returnUrl});
