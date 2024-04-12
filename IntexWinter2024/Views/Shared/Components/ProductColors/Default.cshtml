@@ -1,7 +1,7 @@
 ﻿@model IQueryable<string>
 
 <div class="d-grid gap-2">
-    <select name="productColors">
+    <select name="primaryColor" id="primaryColor">
         <option value=""></option>
         @foreach (string pc in Model ?? Enumerable.Empty<string>())
         {

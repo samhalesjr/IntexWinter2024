@@ -103,14 +103,16 @@ namespace IntexWinter2024.Controllers
             var productsQuery = _repo.Products;
 
             // Filter products based on the selected category and/or primary color
-            if (!string.IsNullOrEmpty(productCategory) || !string.IsNullOrEmpty(primaryColor))
+            if (!string.IsNullOrEmpty(productCategory))
             {
                 productsQuery = productsQuery
-                    .Where(p => 
-                        (!string.IsNullOrEmpty(productCategory) && _repo.ProductCategories
-                            .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory)) ||
-                        (!string.IsNullOrEmpty(primaryColor) && p.PrimaryColor == primaryColor)
-                     );
+                    .Where(p => !string.IsNullOrEmpty(productCategory) && _repo.ProductCategories.Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+            }
+
+            if (!string.IsNullOrEmpty(primaryColor))
+            {
+                productsQuery = productsQuery
+                    .Where(p => !string.IsNullOrEmpty(primaryColor) && p.PrimaryColor == primaryColor);
             }
 
             // Order the products by ProductId
