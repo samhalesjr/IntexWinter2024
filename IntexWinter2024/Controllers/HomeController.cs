@@ -31,8 +31,10 @@ namespace IntexWinter2024.Controllers
             return View(products); // Pass the products to the view
         }
 
-        public IActionResult Browse(int pageNum, string productCategory)
+        [HttpGet]
+        public IActionResult Browse(int pageNum, string productCategory, string primaryColor)
         {
+
             if (pageNum <= 0)
             {
                 pageNum = 1;
@@ -44,12 +46,17 @@ namespace IntexWinter2024.Controllers
             // Query products from the repository
             var productsQuery = _repo.Products;
 
-            // Filter products based on the selected category
+            // Filter products based on the selected category and/or primary color
             if (!string.IsNullOrEmpty(productCategory))
             {
                 productsQuery = productsQuery
-                    .Where(p => _repo.ProductCategories
-                        .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+                    .Where(p => !string.IsNullOrEmpty(productCategory) && _repo.ProductCategories.Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+            }
+
+            if (!string.IsNullOrEmpty(primaryColor))
+            {
+                productsQuery = productsQuery
+                    .Where(p => !string.IsNullOrEmpty(primaryColor) && p.PrimaryColor == primaryColor);
             }
 
             // Order the products by ProductId
@@ -61,6 +68,7 @@ namespace IntexWinter2024.Controllers
                 .Take(pageSize)
                 .ToList();
 
+            // Instantiate a list of ProductViewModels to add the filtered products to
             var productViewModels = new List<ProductCategoryViewModel>();
 
             foreach (var product in products)
@@ -80,6 +88,8 @@ namespace IntexWinter2024.Controllers
             var lego = new ProductsListViewModel
             { 
                 Categories = _repo.GetAllCategories(),
+
+                PrimaryColors = _repo.GetAllPrimaryColors(),
 
                 PaginationInfo = new PaginationInfo()
                 {
