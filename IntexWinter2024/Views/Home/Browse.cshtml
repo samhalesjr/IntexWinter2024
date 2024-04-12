@@ -2,17 +2,18 @@
     ViewData["Title"] = "Products";
 }
 @model ProductsListViewModel
+
 <div class="row m-1 p-1">
     <div class="col-2">
         <form asp-controller="Home" asp-action="Browse" method="get">
             <div class="row">
                 <label for="productCategory">Filter By Category:</label>
-                <vc:product-categories selectedCategory="@ViewData["SelectedCategory"]" />
+                <vc:product-categories />
             </div>
             <br />
             <div class="row">
                 <label for="primaryColor">Filter By Color:</label>
-                <vc:product-colors selectedColor="@ViewData["SelectedColor"]" />
+                <vc:product-colors />
             </div>
             <br />
             <div class="row">

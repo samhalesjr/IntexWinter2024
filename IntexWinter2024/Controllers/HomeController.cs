@@ -34,6 +34,7 @@ namespace IntexWinter2024.Controllers
         [HttpGet]
         public IActionResult Browse(int pageNum, string productCategory, string primaryColor)
         {
+
             if (pageNum <= 0)
             {
                 pageNum = 1;
@@ -99,9 +100,6 @@ namespace IntexWinter2024.Controllers
 
                 ProductCategoryViewModels = productViewModels
             };
-
-            ViewData["SelectedCategory"] = productCategory;
-            ViewData["SelectedColor"] = primaryColor;
 
             return View(lego);
         }

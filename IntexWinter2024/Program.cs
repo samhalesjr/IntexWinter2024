@@ -80,6 +80,9 @@ namespace IntexWinter2024
             app.UseAuthentication();
             app.UseSession();
 
+
+            app.MapControllerRoute("pagination", "/Browse/{pageNum}", new { Controller = "Home", Action = "Browse", pageNum = 1 });
+
             // this will improve the browse page's URLs
             app.MapControllerRoute(
                 name: "productCategoryAndColor",
@@ -96,12 +99,6 @@ namespace IntexWinter2024
             app.MapControllerRoute(
                 name: "primaryColor",
                 pattern: "/Browse/{primaryColor}/{pageNum}",
-                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
-            );
-
-            app.MapControllerRoute(
-                name: "pagination",
-                pattern: "/Browse/{pageNum}",
                 defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
             );
 
