@@ -79,12 +79,32 @@ namespace IntexWinter2024
             // Added for user and session management
             app.UseAuthentication();
             app.UseSession();
-            
+
             // this will improve the browse page's URLs
-            app.MapControllerRoute("pageNumAndType", "/Browse/{productCategory}/{pageNum}", new { Controller = "Home", Action = "Browse" });
-            app.MapControllerRoute("pagination", "/Browse/{pageNum}", new {Controller = "Home", Action = "Browse", pageNum = 1});
-            app.MapControllerRoute("productCategory", "/Browse/{productCategory}", new { Controller = "Home", Action = "Browse", pageNum = 1 });
-            
+            app.MapControllerRoute(
+                name: "productCategoryAndColor",
+                pattern: "/Browse/{productCategory}/{primaryColor}/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
+            app.MapControllerRoute(
+                name: "productCategory",
+                pattern: "/Browse/{productCategory}/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
+            app.MapControllerRoute(
+                name: "primaryColor",
+                pattern: "/Browse/{primaryColor}/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
+            app.MapControllerRoute(
+                name: "pagination",
+                pattern: "/Browse/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
             app.MapDefaultControllerRoute();
 
             app.MapRazorPages();

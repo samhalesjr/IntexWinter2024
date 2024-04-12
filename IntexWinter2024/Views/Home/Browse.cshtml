@@ -4,15 +4,15 @@
 @model ProductsListViewModel
 <div class="row m-1 p-1">
     <div class="col-2">
-        <form asp-controller="Home" asp-action="Browse" method="post">
+        <form asp-controller="Home" asp-action="Browse" method="get">
             <div class="row">
                 <label for="productCategory">Filter By Category:</label>
-                <vc:product-categories />
+                <vc:product-categories selectedCategory="@ViewData["SelectedCategory"]" />
             </div>
             <br />
             <div class="row">
                 <label for="primaryColor">Filter By Color:</label>
-                <vc:product-colors />
+                <vc:product-colors selectedColor="@ViewData["SelectedColor"]" />
             </div>
             <br />
             <div class="row">
