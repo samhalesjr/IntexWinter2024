@@ -168,7 +168,7 @@ namespace IntexWinter2024.Controllers
             if (((string)ViewData["ApplicationUserRole"]) == "Admin")
             {
                 var fraudulentOrders = _repo.Orders
-                    .Where(x => x.Fraud == true)
+                    .Where(x => x.Flagged == true)
                     .ToList();
 
                 return View(fraudulentOrders);
