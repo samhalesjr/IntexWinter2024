@@ -1,7 +1,9 @@
 @model ProductDetailsViewModel
 
 <div class="row m-1 p-1">
-    <div class="bg-primary col-4">image goes here</div>
+    <div class="bg-white col-4">
+        <img src="@Model.ProductCategory.Product.ImgLink" width="300px"/>
+    </div>
     
     <div class="col-8">
         <h3>Title: @Model.ProductCategory.Product.Name</h3>
