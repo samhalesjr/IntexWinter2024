@@ -6,8 +6,8 @@
 
 <form asp-action="Checkout" method="post">
     <input type="hidden" asp-for="CustomerId" value="@Convert.ToInt32(ViewData["CustomerId"])" />
-    <input type="hidden" asp-for="Date" value="" /> 
-    <input type="hidden" asp-for="DayOfWeek" value="" />
+    <input type="hidden" asp-for="Date" value="@DateTime.Now" /> 
+    <input type="hidden" asp-for="DayOfWeek" value="@DateTime.Now.ToString("ddd")" />
     <input type="hidden" asp-for="EntryMode" value="CVC" />
     <input type="hidden" asp-for="Amount" value="1" />
     <input type="hidden" asp-for="TypeOfTransaction" value="Online" />
