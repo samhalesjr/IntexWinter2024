@@ -47,6 +47,7 @@ namespace IntexWinter2024.Models
             _context.Update(updatedInfo);
             _context.SaveChanges();
         }
+
         // Method to get a list of categories for a product. Takes a product Id and returns a list of it's categories
         public List<string> GetCategoriesForProduct(int productId)
         {
@@ -63,6 +64,27 @@ namespace IntexWinter2024.Models
             return _context.ProductCategories
                 .Select(pc => pc.CategoryName)
                 .Distinct()
+                .ToList();
+        }
+
+        // Method to get the primary color for a product. Takes a product Id and returns the primary color as a string
+        public List<string> GetPrimaryColor(int productId)
+        {
+            return _context.Products
+                .Where(p => p.ProductId == productId)
+                .Select(p => p.PrimaryColor)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+        }
+
+        // Method to get all distinct primary colors present in the database
+        public List<string> GetAllPrimaryColors()
+        {
+            return _context.Products
+                .Select(p => p.PrimaryColor)
+                .Distinct()
+                .OrderBy(x => x)
                 .ToList();
         }
         public Customer GetCustomer(ClaimsPrincipal user)

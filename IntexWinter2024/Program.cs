@@ -79,17 +79,44 @@ namespace IntexWinter2024
             // Added for user and session management
             app.UseAuthentication();
             app.UseSession();
-            
+
+
+            app.MapControllerRoute("pagination", "/Browse/{pageNum}", new { Controller = "Home", Action = "Browse", pageNum = 1 });
+
             // this will improve the browse page's URLs
-            app.MapControllerRoute("pageNumAndType", "/Browse/{productCategory}/{pageNum}", new { Controller = "Home", Action = "Browse" });
-            app.MapControllerRoute("pagination", "/Browse/{pageNum}", new {Controller = "Home", Action = "Browse", pageNum = 1});
-            app.MapControllerRoute("productCategory", "/Browse/{productCategory}", new { Controller = "Home", Action = "Browse", pageNum = 1 });
-            
+            app.MapControllerRoute(
+                name: "productCategoryAndColor",
+                pattern: "/Browse/{productCategory}/{primaryColor}/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
+            app.MapControllerRoute(
+                name: "productCategory",
+                pattern: "/Browse/{productCategory}/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
+            app.MapControllerRoute(
+                name: "primaryColor",
+                pattern: "/Browse/{primaryColor}/{pageNum}",
+                defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
+            );
+
             app.MapDefaultControllerRoute();
 
             app.MapRazorPages();
             // Cookie policy
             app.UseCookiePolicy();
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("Content-Security-Policy",
+                    "default-src 'self'; " +
+                    "script-src 'self'; " +
+                    "style-src 'self' 'unsafe-inline'; " +
+                    "img-src 'self' m.media-amazon.com images.brickset.com www.lego.com www.brickeconomy.com;");
+                await next();
+            });
 
             // url routes for product details
             app.MapControllerRoute("productDetails", "/ProductDetails/{productId?}",

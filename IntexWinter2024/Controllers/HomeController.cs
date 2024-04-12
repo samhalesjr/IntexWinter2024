@@ -10,7 +10,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
 
-
 namespace IntexWinter2024.Controllers
 {
     public class HomeController : BaseController
@@ -35,25 +34,35 @@ namespace IntexWinter2024.Controllers
             return View(productList);
         }
 
-        public IActionResult Browse(int pageNum, string productCategory)
+        [HttpGet]
+        public IActionResult Browse(int pageNum, string productCategory, string primaryColor, int pageSize)
         {
+
             if (pageNum <= 0)
             {
                 pageNum = 1;
             }
 
-            int pageSize = 5;
+            if (pageSize == 0)
+            {
+                pageSize = 5;
+            }
 
             // Here we're differing from the videos. We need to because the differing tables.
             // Query products from the repository
             var productsQuery = _repo.Products;
 
-            // Filter products based on the selected category
+            // Filter products based on the selected category and/or primary color
             if (!string.IsNullOrEmpty(productCategory))
             {
                 productsQuery = productsQuery
-                    .Where(p => _repo.ProductCategories
-                        .Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+                    .Where(p => !string.IsNullOrEmpty(productCategory) && _repo.ProductCategories.Any(pc => pc.ProductId == p.ProductId && pc.CategoryName == productCategory));
+            }
+
+            if (!string.IsNullOrEmpty(primaryColor))
+            {
+                productsQuery = productsQuery
+                    .Where(p => !string.IsNullOrEmpty(primaryColor) && p.PrimaryColor == primaryColor);
             }
 
             // Order the products by ProductId
@@ -65,6 +74,7 @@ namespace IntexWinter2024.Controllers
                 .Take(pageSize)
                 .ToList();
 
+            // Instantiate a list of ProductViewModels to add the filtered products to
             var productViewModels = new List<ProductCategoryViewModel>();
 
             foreach (var product in products)
@@ -84,6 +94,8 @@ namespace IntexWinter2024.Controllers
             var lego = new ProductsListViewModel
             { 
                 Categories = _repo.GetAllCategories(),
+
+                PrimaryColors = _repo.GetAllPrimaryColors(),
 
                 PaginationInfo = new PaginationInfo()
                 {
@@ -144,16 +156,24 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult AdminLandingPage()
         {
-            return View();
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                return View();
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult OrderReview()
         {
-            var fraudulentOrders = _repo.Orders
-                .Where(x => x.Fraud == true)
-                .ToList();
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var fraudulentOrders = _repo.Orders
+                    .Where(x => x.Fraud == true)
+                    .ToList();
 
-            return View(fraudulentOrders);
+                return View(fraudulentOrders);
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult ProductDetails(int productId)
@@ -206,46 +226,65 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult ProductEdit()
         {
-            var products = _repo.Products
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var products = _repo.Products
                 .ToList();
 
-            return View(products);
+                return View(products);
+            }
+            else return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult ProductEditPage(int id)
         {
-            var productToEdit = _repo.Products
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var productToEdit = _repo.Products
                 .SingleOrDefault(x => x.ProductId == id);
 
-            return View(productToEdit);
+                return View(productToEdit);
+            }
+            else return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult ProductEdit(Product updatedInfo)
         {
-            _repo.EditProduct(updatedInfo);
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                _repo.EditProduct(updatedInfo);
 
-            return RedirectToAction("ProductEdit");
+                return RedirectToAction("ProductEdit");
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult UserEdit()
         {
-            var customers = _repo.Customers
-                .ToList();
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var customers = _repo.Customers
+                    .ToList();
 
-            return View(customers);
+                return View(customers);
+            }
+            else return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult UserEditPage(int id)
         {
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var userToEdit = _repo.Customers
+                    .Include(x => x.Role)
+                    .SingleOrDefault(x => x.CustomerId == id);
 
-            var userToEdit = _repo.Customers
-                .Include(x => x.Role)
-                .SingleOrDefault(x => x.CustomerId == id);
-
-            return View(userToEdit);
+                return View(userToEdit);
+            }
+            else return RedirectToAction("Index");
 
 
         }
@@ -253,9 +292,13 @@ namespace IntexWinter2024.Controllers
         [HttpPost]
         public IActionResult UserEdit(Customer updatedInfo)
         {
-            _repo.EditCustomer(updatedInfo);
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                _repo.EditCustomer(updatedInfo);
 
-            return RedirectToAction("UserEdit");
+                return RedirectToAction("UserEdit");
+            }
+            else return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

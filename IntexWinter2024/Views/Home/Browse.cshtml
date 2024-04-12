@@ -2,12 +2,29 @@
     ViewData["Title"] = "Products";
 }
 @model ProductsListViewModel
+
 <div class="row m-1 p-1">
     <div class="col-2">
-        <p>Filter By Category:</p><br/>
-        <vc:product-categories/>
+        <form asp-controller="Home" asp-action="Browse" method="get">
+            <div class="row">
+                <label for="productCategory">Filter By Category:</label>
+                <vc:product-categories />
+            </div>
+            <br />
+            <div class="row">
+                <label for="primaryColor">Filter By Color:</label>
+                <vc:product-colors />
+            </div>
+            <br />
+            <div class="row">
+                <button class="btn btn-outline-secondary" asp-controller="Home" asp-action="Browse" type="submit">Apply Filters</button>
+            </div>
+            <div class="row">
+                <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Browse">Reset Filters</a>
+            </div>
+        </form>
     </div>
-    <div class="container col-10">
+    <div class="col-10">
         @foreach (ProductCategoryViewModel p in Model.ProductCategoryViewModels)
         {
             <partial name="ProductSummary" model="p"/>

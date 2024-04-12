@@ -18,6 +18,8 @@ namespace IntexWinter2024.Models
         public void EditCustomer(Customer updatedInfo);
         public List<string> GetAllCategories();
         public List<string> GetCategoriesForProduct(int productId);
+        public List<string> GetAllPrimaryColors();
+        public List<string> GetPrimaryColor(int productId);
         public Customer GetCustomer(ClaimsPrincipal user);
         public IQueryable<ProductBasedProductRecommendation> ProductBasedProductRecommendations { get; }
     }
