@@ -26,7 +26,6 @@ namespace IntexWinter2024.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-            //order.CustomerId = ViewData["CustomerId"];
 
             if (cart.Lines.Count() == 0)
             {
@@ -39,7 +38,7 @@ namespace IntexWinter2024.Controllers
 
             if (ModelState.IsValid)
             {
-                //order.Lines = cart.Lines.ToArray(); //The book does it this way
+
                 order.Lines = cart.Lines.Select(l => new LineItem
                 {
                     ProductId = l.Product.ProductId,
