@@ -53,7 +53,8 @@ namespace IntexWinter2024.Controllers
                         LastName = model.LastName,
                         BirthDate = model.BirthDate,
                         CountryOfResidence = model.CountryOfResidence,
-                        Gender = model.Gender
+                        Gender = model.Gender,
+                        RoleId = 2
                     };
 
                     _context.Customers.Add(customer);

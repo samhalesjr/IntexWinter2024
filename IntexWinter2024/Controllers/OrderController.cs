@@ -5,7 +5,7 @@ using static IntexWinter2024.Models.Cart;
 namespace IntexWinter2024.Controllers
 {
 
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
 
         private IIntexWinter2024Repository _repo;
@@ -13,16 +13,22 @@ namespace IntexWinter2024.Controllers
         private Cart cart;
 
         public OrderController(IIntexWinter2024Repository repoService, Cart cartService)
+            : base(repoService)
         {
             _repo = repoService;
             cart = cartService;
         }
 
-        public ViewResult Checkout() => View(new Order());
+        public IActionResult Checkout()
+        {
+            var customerId = ViewData["CustomerId"];
+            return View(new Order());
+        }
 
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
+
             if (cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError
@@ -34,6 +40,7 @@ namespace IntexWinter2024.Controllers
 
             if (ModelState.IsValid)
             {
+
                 order.Lines = cart.Lines.Select(l => new LineItem
                 {
                     ProductId = l.Product.ProductId,

@@ -23,7 +23,7 @@ namespace IntexWinter2024.Models
                                 .ThenInclude(l => l.Product);
         public void SaveOrder(Order order)
         {
-            _context.AttachRange(order.Lines.Select(l => l)); //This is l.Line in the book and may need to be that way to not just add the product but the quantity as well
+            _context.AttachRange(order.Lines); //This is l.Line in the book and may need to be that way to not just add the product but the quantity as well
             if (order.TransactionId == 0)
             {
                 _context.Orders.Add(order);
@@ -47,6 +47,7 @@ namespace IntexWinter2024.Models
             _context.Update(updatedInfo);
             _context.SaveChanges();
         }
+        // Method to get a list of categories for a product. Takes a product Id and returns a list of it's categories
         public List<string> GetCategoriesForProduct(int productId)
         {
             return _context.ProductCategories
@@ -56,6 +57,7 @@ namespace IntexWinter2024.Models
                 .ToList();
         }
 
+        // Method to get all distinct categories present in the database
         public List<string> GetAllCategories()
         {
             return _context.ProductCategories

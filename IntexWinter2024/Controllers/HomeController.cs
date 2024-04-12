@@ -125,10 +125,15 @@ namespace IntexWinter2024.Controllers
         //            // Optional: For debugging, printing the added order's info
         //            //Console.WriteLine($"Adding Order Amount: {order.Amount} - Date: {order.Date} - Fraud: {order.Fraud}");
 
-        public IActionResult Profile(int id)
+        public IActionResult Profile()
         {
-            var customerInfo = _repo.Customers
-                .Where(x => x.CustomerId == id);
+            var customer = _repo.GetCustomer(User);
+
+            var customerInfo = new OrdersListViewModel
+            {
+                Customer = _repo.GetCustomer(User),
+                Orders = _repo.Orders.Where(x => x.CustomerId == customer.CustomerId)
+            };
 
             return View(customerInfo);
         }
@@ -232,11 +237,14 @@ namespace IntexWinter2024.Controllers
         [HttpGet]
         public IActionResult UserEditPage(int id)
         {
+
             var userToEdit = _repo.Customers
-                //.Include(x => x.Role)
+                .Include(x => x.Role)
                 .SingleOrDefault(x => x.CustomerId == id);
 
             return View(userToEdit);
+
+
         }
 
         [HttpPost]
