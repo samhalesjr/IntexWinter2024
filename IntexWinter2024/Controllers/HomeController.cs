@@ -225,12 +225,15 @@ namespace IntexWinter2024.Controllers
                     ProductBasedProductRecommendation = recommendedProducts
                 };
             }
-
-            viewModel = new ProductDetailsViewModel
+            else
             {
-                ProductCategory = productCategoryViewModel,
-                ProductBasedProductRecommendation = null
-            };
+                viewModel = new ProductDetailsViewModel
+                {
+                    ProductCategory = productCategoryViewModel,
+                    ProductBasedProductRecommendation = null
+                };
+            }
+
 
             return View(viewModel);
         }
