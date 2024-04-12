@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 
 
 namespace IntexWinter2024.Controllers
@@ -27,8 +28,11 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult Index()
         {
-            var products = _repo.Products.ToList(); // Retrieve all products from the database
-            return View(products); // Pass the products to the view
+            // Retrieve the list of products from the repository
+            var productList = _repo.Products.ToList();
+
+            // Pass the list of products to the view
+            return View(productList);
         }
 
         public IActionResult Browse(int pageNum, string productCategory)

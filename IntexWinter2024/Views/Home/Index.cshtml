@@ -2,36 +2,88 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model IEnumerable<Product>
+@model List<Product>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Year</th>
-            <th>Number of Parts</th>
-            <th>Price</th>
-            <th>Image Link</th>
-            <th>Primary Color</th>
-            <th>Secondary Color</th>
-            <th>Description</th>
-            <th>Category</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model)
+@if (!User.Identity.IsAuthenticated)
+{
+    <br />
+    <h1>Welcome to Aurora Bricks! Below are some of our top rated kits:</h1>
+    <br />
+
+    <div class="row">
+        @foreach(Product p in Model)
         {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => p.Name)</td>
-                <td>@Html.DisplayFor(modelItem => p.Year)</td>
-                <td>@Html.DisplayFor(modelItem => p.NumParts)</td>
-                <td>@Html.DisplayFor(modelItem => p.Price)</td>
-                <td><a href="@p.ImgLink">Image Link</a></td>
-                <td>@Html.DisplayFor(modelItem => p.PrimaryColor)</td>
-                <td>@Html.DisplayFor(modelItem => p.SecondaryColor)</td>
-                <!--<td>@Html.DisplayFor(modelItem => p.Description)</td>-->
-            </tr>
-        }
-    </tbody>
-</table>
+            if (new List<int> { 27 + 5, 33 + 5, 34 + 5, 13 + 5, 24 + 5, 23 + 5 }.Contains(p.ProductId)) @* Our actual database starts at 6 for product id, so we changed this accordingly *@
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="rounded border border-dark" style="background-color: #F0F4FF; text-align: center;">
+                        <!-- Set background color -->
+                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@p.ProductId" style="width: auto;">
+                            <h4>@p.Name</h4>
+                        </a>
 
+                        <img src="@p.ImgLink" style="width: 250px; height: 200px; background-color: #F0F4FF;" />
+
+                        <div style="background-color: #F0F4FF;">
+                            <!-- Set background color and add padding -->
+                            <ul class="list-unstyled" style="list-style-type: none; padding: 0;">
+                                <!-- Remove bullet points and reset padding -->
+                                <li>$@p.Price</li>
+                                <li>Year Released: @p.Year</li>
+                                <li>Main color: @p.PrimaryColor</li>
+                            </ul>
+                        </div>
+
+                        <form id="@p.ProductId" method="post" asp-page="/Cart" style="padding: 10px;">
+                            <input type="hidden" asp-for="@p.ProductId" name="productId" />
+                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                            <button type="submit" class="btn btn-success">Add To Cart</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+}
+else if (User.Identity.IsAuthenticated)
+{
+    <br />
+    <h1>Welcome! Below are some of your top recommended kits:</h1>
+    <br />
+
+    <div class="row">
+        @foreach (Product p in Model)
+        {
+            if (new List<int> { 21 + 5, 12 + 5, 22 + 5, 36 + 5, 18 + 5, 13 + 5 }.Contains(p.ProductId)) @* Our actual database starts at 6 for product id, so we changed this accordingly *@
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="rounded border border-dark" style="background-color: #F0F4FF; text-align: center;">
+                        <!-- Set background color -->
+                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@p.ProductId" style="width: auto;">
+                            <h4>@p.Name</h4>
+                        </a>
+
+                        <img src="@p.ImgLink" style="width: 250px; height: 200px; background-color: #F0F4FF;" />
+
+                        <div style="background-color: #F0F4FF;">
+                            <!-- Set background color and add padding -->
+                            <ul class="list-unstyled" style="list-style-type: none; padding: 0;">
+                                <!-- Remove bullet points and reset padding -->
+                                <li>$@p.Price</li>
+                                <li>Year Released: @p.Year</li>
+                                <li>Main color: @p.PrimaryColor</li>
+                            </ul>
+                        </div>
+
+                        <form id="@p.ProductId" method="post" asp-page="/Cart" style="padding: 10px;">
+                            <input type="hidden" asp-for="@p.ProductId" name="productId" />
+                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                            <button type="submit" class="btn btn-success">Add To Cart</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
