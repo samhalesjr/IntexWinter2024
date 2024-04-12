@@ -25,8 +25,7 @@ namespace IntexWinter2024.Controllers
             // initializing the InferenceSession here.
             try
             {
-                _session = new InferenceSession(
-                    "/Users/prestonvance/Documents/Winter JRCORE/intex/IntexWinter2024/decision_tree_model.onnx");
+                _session = new InferenceSession("decision_tree_model.onnx");
                 // _logger.LogInformation("ONNX model loaded successfully.");
             }
             catch (Exception ex)
@@ -37,6 +36,7 @@ namespace IntexWinter2024.Controllers
 
         public IActionResult Checkout()
         {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
             var customerId = ViewData["CustomerId"];
             return View(new Order());
         }
@@ -44,6 +44,7 @@ namespace IntexWinter2024.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
+            if (!User.Identity.IsAuthenticated) return RedirectToAction("Login","Account");
 
             if (cart.Lines.Count() == 0)
             {
@@ -263,19 +264,23 @@ namespace IntexWinter2024.Controllers
                      {
                          NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
                      };
-                     
+                    
                      using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form (i.e. class_type 1-7)
                      {
                          var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
                          if (prediction != null && prediction.Length > 0)
                          {
-                             // then it is a fraud
-                             order.Flagged = true;
+                            // then it is a fraud
+                            order.Flagged = true;
+                            _repo.SaveOrder(order);
+                            cart.ClearCart();
+
+                            return View("Fraudulent");
                          }
                          else
                          {
-                             // then it's legit
-                             order.Flagged = false;
+                            // then it's legit
+                            order.Flagged = false;
                          }
                      }
                      
@@ -286,14 +291,10 @@ namespace IntexWinter2024.Controllers
                      // _logger.LogError($"Error during prediction: {ex.Message}");
                      ViewBag.Prediction = "Error during prediction.";
                  }
-            
-                // return View("Order");
-                
                 
                 _repo.SaveOrder(order);
                 cart.ClearCart();
 
-                TempData["Test"] = "woah this is cool";
                 return RedirectToPage("/Completed", new { transactionId = order.TransactionId });
             }
             else

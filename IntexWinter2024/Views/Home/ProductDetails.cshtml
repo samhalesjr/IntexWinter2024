@@ -1,29 +1,49 @@
 @model ProductDetailsViewModel
 
 <div class="row m-1 p-1">
-    <div class="bg-white col-4">
-        <img src="@Model.ProductCategory.Product.ImgLink" width="300px"/>
+    <div class="bg-white col-5">
+        <img src="@Model.ProductCategory.Product.ImgLink" width="400px"/>
     </div>
     
-    <div class="col-8">
-        <h3>Title: @Model.ProductCategory.Product.Name</h3>
-        <p>$@Model.ProductCategory.Product.Price</p>
-        <ul>
-            <li>Release Year: @Model.ProductCategory.Product.Year</li>
-            <li>Number of Pieces: @Model.ProductCategory.Product.NumParts</li>
-            <li>Primary Color: @Model.ProductCategory.Product.PrimaryColor</li>
-            <li>Secondary Color: @Model.ProductCategory.Product.SecondaryColor</li>
-            @if (Model.ProductCategory.Categories.Count() == 1)
-            {
-                <li>Category: @Model.ProductCategory.Categories.First()</li>
-            }
-            else
-            {
-                <li>Categories: @string.Join(", ", Model.ProductCategory.Categories)</li>
-            }
-        </ul>
-
+    <div class="col-7">
+        <h2>Title: @Model.ProductCategory.Product.Name</h2>
+        <br />
+        <div class="row">
+            <div class="col-4">
+                <p><span class="fw-bold">Size:</span> @Model.ProductCategory.Product.NumParts Pieces</p>
+                <p><span class="fw-bold">Released:</span> @Model.ProductCategory.Product.Year</p>
+                <p><span class="fw-bold">Sale Price:</span> $@Model.ProductCategory.Product.Price</p>
+                <p><small><span class="fw-bold">Primary Color:</span> @Model.ProductCategory.Product.PrimaryColor</small></p>
+                <p><small><span class="fw-bold">Secondary Color:</span> @Model.ProductCategory.Product.SecondaryColor</small></p>
+                @if (Model.ProductCategory.Categories.Count() == 1)
+                {
+                    <p><small><span class="fw-bold">Category:</span> @Model.ProductCategory.Categories.First()</small></p>
+                }
+                else
+                {
+                    <p><small><span class="fw-bold">Categories:</span> @string.Join(", ", Model.ProductCategory.Categories)</small></p>
+                }
+            </div>
+            <div class="col-8">
+                <br />
+                <br />
+                <br />
+                <br />
+                <form id="@Model.ProductCategory.Product.ProductId" method="post" asp-page="/Cart">
+                    <label for="quantity">Quantity</label>
+                    <input id="quantity" name="quantity" />
+                    <input type="hidden" asp-for="@Model.ProductCategory.Product.ProductId" name="productId" />
+                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                    <br />
+                    <br />
+                    <button class="btn btn-primary"><span class="text-white">Add to cart</span></button>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
+<div class="row">
+    <p><span class="fw-bold">Description:</span> @Model.ProductCategory.Product.Description</p>
 </div>
 <div class="m-2">
     <h4>Recommendation Products:</h4>

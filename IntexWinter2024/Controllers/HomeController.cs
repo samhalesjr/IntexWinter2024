@@ -8,9 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.ML.OnnxRuntime;
-using Microsoft.ML.OnnxRuntime.Tensors;
-
+using System.Collections.Immutable;
 
 namespace IntexWinter2024.Controllers
 {
@@ -19,35 +17,25 @@ namespace IntexWinter2024.Controllers
         private IIntexWinter2024Repository _repo;
 
         private readonly ILogger<HomeController> _logger;
-        private readonly InferenceSession _session;
 
         public HomeController(ILogger<HomeController> logger, IIntexWinter2024Repository repo)
             : base(repo)
         {
             _logger = logger;
             _repo = repo;
-            
-            // initializing the InferenceSession here.
-            try
-            {
-                _session = new InferenceSession(
-                    "/Users/prestonvance/Documents/Winter JRCORE/intex/IntexWinter2024/decision_tree_model.onnx");
-                _logger.LogInformation("ONNX model loaded successfully.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error loading the ONNX model: {ex.Message}");
-            }
         }
 
         public IActionResult Index()
         {
-            var products = _repo.Products.ToList(); // Retrieve all products from the database
-            return View(products); // Pass the products to the view
+            // Retrieve the list of products from the repository
+            var productList = _repo.Products.ToList();
+
+            // Pass the list of products to the view
+            return View(productList);
         }
 
         [HttpGet]
-        public IActionResult Browse(int pageNum, string productCategory, string primaryColor)
+        public IActionResult Browse(int pageNum, string productCategory, string primaryColor, int pageSize)
         {
 
             if (pageNum <= 0)
@@ -55,7 +43,10 @@ namespace IntexWinter2024.Controllers
                 pageNum = 1;
             }
 
-            int pageSize = 5;
+            if (pageSize == 0)
+            {
+                pageSize = 5;
+            }
 
             // Here we're differing from the videos. We need to because the differing tables.
             // Query products from the repository
