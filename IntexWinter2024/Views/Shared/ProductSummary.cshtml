@@ -24,7 +24,7 @@
                 </ul>
                 <div class="row">
                     <div class="col-3">
-                        <button asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@Model.Product.ProductId" class="btn btn-success">View Details</button>
+                        <button asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@Model.Product.ProductId" class="btn btn-secondary">View Details</button>
                     </div>
                     <div class="col-9">
                         <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
