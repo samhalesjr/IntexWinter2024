@@ -6,13 +6,24 @@
 
 @model Product
 
-<h2>Confirm Deletion</h2>
-<h3>@Model.Name</h3>
+<div class="container">
+    <div class="container-header" style="background-color: red;">
+        <h2>Delete Confirmation</h2>
+    </div>
+    <br />
+    <h3 style="text-align: center; font-family: sans-serif;">Confirm Deletion</h3>
+    <br />
+    <b><h2 style="text-align: center; font-family: sans-serif;">@Model.Name</h2></b>
+    <div style="text-align: center;">
+    <br />
+        <form method="post">
 
-<form method="post">
+            <input type="hidden" asp-for="@Model.ProductId" />
 
-    <input type="hidden" asp-for="@Model.ProductId" />
+            <a class="btn btn-danger" style="text-align: center; font-family: sans-serif; background-color: red; border: none; color: white;"><button type="submit" style="background-color: red; border: none; color: white;">Delete</button></a>
+            <a class="btn btn-danger" asp-controller="Home" asp-action="ProductEdit" style="font-family: sans-serif; background-color: #949494; border: none;">Cancel</a>
+        </form>
+    </div>
+</div>
 
-    <button type="submit">Delete</button>
-    <a class="btn btn-danger" asp-controller="Home" asp-action="ProductEdit">Cancel</a>
-</form>
+
