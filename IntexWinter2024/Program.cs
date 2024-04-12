@@ -112,11 +112,19 @@ namespace IntexWinter2024
             {
                 context.Response.Headers.Add("Content-Security-Policy",
                     "default-src 'self'; " +
-                    "script-src 'self'; " +
-                    "style-src 'self' 'unsafe-inline'; " +
-                    "img-src 'self' m.media-amazon.com images.brickset.com www.lego.com www.brickeconomy.com;");
+                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://www.recaptcha.net; " +
+                    "style-src 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://www.recaptcha.net; " +
+                    "img-src 'self' https://m.media-amazon.com https://images.brickset.com https://www.lego.com https://www.brickeconomy.com https://www.gstatic.com https://www.google.com https://media.tenor.com; " +
+                    "frame-src 'self' https://www.google.com https://www.recaptcha.net; " +
+                    "connect-src 'self' https://www.google.com https://recaptcha.google.com https://www.recaptcha.net; " +
+                    "font-src 'self' https://fonts.gstatic.com; " +
+                    "object-src 'none';");
                 await next();
             });
+
+
+
+
 
             // url routes for product details
             app.MapControllerRoute("productDetails", "/ProductDetails/{productId?}",
