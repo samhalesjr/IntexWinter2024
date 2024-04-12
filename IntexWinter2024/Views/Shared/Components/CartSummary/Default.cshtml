@@ -5,11 +5,14 @@
 <div class="" style="position:relative">
     @if (Model.Lines.Count() > 0)
     {
-        <small class="navbar-text" style="position:absolute; top:0; right:0;">
-            @Model.Lines.Sum(x => x.Quantity) item(s)
+        <small class="navbar-text" style="position:absolute; top:-10px; right:10px;">
+            @Model.Lines.Sum(x => x.Quantity)
         </small>
     }
-    <a class="btn btn-sm btn-secondary navbar-btn" asp-page="/Cart"
+@*     <div>
+        <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+    </div> *@
+    <a asp-page="/Cart"
        asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
         <i class="fa-solid fa-cart-shopping"></i>
     </a>
