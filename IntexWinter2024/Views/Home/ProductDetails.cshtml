@@ -49,12 +49,24 @@
     @if (Model.ProductBasedProductRecommendation != null)
     {
         <h4>Recommendation Products:</h4>
-        <ul>
+        <div class="row">
             @foreach (var product in Model.ProductBasedProductRecommendation)
             {
-                <li>Product ID: @product.ProductId</li>
-                <li>Name: @product.Name</li>
+                
+                    <div class="col-4 row my-3">
+                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@product.ProductId">
+                            <div class="col-5">
+                                <img src="@product.ImgLink" width="100px" />
+                            </div>
+                            <div class="col-7">
+                                <h6>@product.Name</h6>
+                                <p>Price: $@product.Price</p>
+                                <p>Number of pieces: @product.NumParts</p>
+                            </div>
+                        </a>
+                    </div>
+
             }
-        </ul>
+        </div>
     }
 </div>
