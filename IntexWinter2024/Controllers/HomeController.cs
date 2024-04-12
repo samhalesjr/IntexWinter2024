@@ -55,7 +55,10 @@ namespace IntexWinter2024.Controllers
                 pageNum = 1;
             }
 
-            //int pageSize = 5;
+            if (pageSize == 0)
+            {
+                pageSize = 5;
+            }
 
             // Here we're differing from the videos. We need to because the differing tables.
             // Query products from the repository
