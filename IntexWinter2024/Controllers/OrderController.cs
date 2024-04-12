@@ -264,19 +264,23 @@ namespace IntexWinter2024.Controllers
                      {
                          NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
                      };
-                     
+                    
                      using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form (i.e. class_type 1-7)
                      {
                          var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
                          if (prediction != null && prediction.Length > 0)
                          {
-                             // then it is a fraud
-                             order.Flagged = true;
+                            // then it is a fraud
+                            order.Flagged = true;
+                            _repo.SaveOrder(order);
+                            cart.ClearCart();
+
+                            return View("Fraudulent");
                          }
                          else
                          {
-                             // then it's legit
-                             order.Flagged = false;
+                            // then it's legit
+                            order.Flagged = false;
                          }
                      }
                      
@@ -287,12 +291,10 @@ namespace IntexWinter2024.Controllers
                      // _logger.LogError($"Error during prediction: {ex.Message}");
                      ViewBag.Prediction = "Error during prediction.";
                  }
-
                 
                 _repo.SaveOrder(order);
                 cart.ClearCart();
 
-                TempData["Test"] = "woah this is cool";
                 return RedirectToPage("/Completed", new { transactionId = order.TransactionId });
             }
             else
