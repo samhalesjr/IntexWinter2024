@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 
 namespace IntexWinter2024.Controllers
@@ -17,12 +19,25 @@ namespace IntexWinter2024.Controllers
         private IIntexWinter2024Repository _repo;
 
         private readonly ILogger<HomeController> _logger;
+        private readonly InferenceSession _session;
 
         public HomeController(ILogger<HomeController> logger, IIntexWinter2024Repository repo)
             : base(repo)
         {
             _logger = logger;
             _repo = repo;
+            
+            // initializing the InferenceSession here.
+            try
+            {
+                _session = new InferenceSession(
+                    "/Users/prestonvance/Documents/Winter JRCORE/intex/IntexWinter2024/decision_tree_model.onnx");
+                _logger.LogInformation("ONNX model loaded successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading the ONNX model: {ex.Message}");
+            }
         }
 
         public IActionResult Index()
