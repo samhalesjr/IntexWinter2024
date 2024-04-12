@@ -6,7 +6,7 @@
     </div>
     
     <div class="col-7">
-        <h2>Title: @Model.ProductCategory.Product.Name</h2>
+        <h2>@Model.ProductCategory.Product.Name</h2>
         <br />
         <div class="row">
             <div class="col-4">
@@ -46,12 +46,15 @@
     <p><span class="fw-bold">Description:</span> @Model.ProductCategory.Product.Description</p>
 </div>
 <div class="m-2">
-    <h4>Recommendation Products:</h4>
-    <ul>
-        @foreach (var product in Model.ProductBasedProductRecommendation)
-        {
-            <li>Product ID: @product.ProductId</li>
-            <li>Name: @product.Name</li>
-        }
-    </ul>
+    @if (Model.ProductBasedProductRecommendation != null)
+    {
+        <h4>Recommendation Products:</h4>
+        <ul>
+            @foreach (var product in Model.ProductBasedProductRecommendation)
+            {
+                <li>Product ID: @product.ProductId</li>
+                <li>Name: @product.Name</li>
+            }
+        </ul>
+    }
 </div>

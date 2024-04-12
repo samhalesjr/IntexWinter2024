@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using IntexWinter2024.Models.ViewModels;
 ﻿using System.Linq;
 
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,14 @@ namespace IntexWinter2024.Models
         }
         public IQueryable<Customer> Customers => _context.Customers;
         public IQueryable<Product> Products => _context.Products;
+        public IQueryable<ProductCategoryViewModel> ProductCategoryViewModels =>
+            from p in _context.Products
+            join c in _context.ProductCategories on p.ProductId equals c.ProductId into categories
+            select new ProductCategoryViewModel
+            {
+                Product = p,
+                Categories = categories.Select(c => c.CategoryName).ToList()
+            }; 
         public IQueryable<Order> Orders => _context.Orders
                                 .Include(o => o.Lines)
                                 .ThenInclude(l => l.Product);
