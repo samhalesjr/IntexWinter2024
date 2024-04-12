@@ -47,7 +47,7 @@ namespace IntexWinter2024.Controllers
         }
 
         [HttpGet]
-        public IActionResult Browse(int pageNum, string productCategory, string primaryColor)
+        public IActionResult Browse(int pageNum, string productCategory, string primaryColor, int pageSize)
         {
 
             if (pageNum <= 0)
@@ -55,7 +55,7 @@ namespace IntexWinter2024.Controllers
                 pageNum = 1;
             }
 
-            int pageSize = 5;
+            //int pageSize = 5;
 
             // Here we're differing from the videos. We need to because the differing tables.
             // Query products from the repository
