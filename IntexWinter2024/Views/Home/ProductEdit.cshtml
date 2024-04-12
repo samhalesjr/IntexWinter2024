@@ -2,7 +2,7 @@
 }
 
 @model List<ProductCategoryViewModel>
-<div class="col-12">
+<div class="container-fluid">
     <br />
     <div class="row">
         <form asp-controller="Home" asp-action="AddProduct" method="get">
@@ -19,11 +19,11 @@
                 <td>Year</td>
                 <td>Number of Parts</td>
                 <td>Price</td>
-                <td>Image Link</td>
+                <td style="max-width: 70px !important;">Image Link</td>
                 <td>Primary Color</td>
                 <td>Secondary Color</td>
                 <td>Category</td>
-                <td>Description</td>
+                <td style="max-width: 50px">Description</td>
                 <td>Edit</td>
                 <td>Delete</td>
             </tr>
@@ -37,7 +37,9 @@
                     <td>@p.Product.Year</td>
                     <td>@p.Product.NumParts</td>
                     <td>@p.Product.Price</td>
-                    <td>@p.Product.ImgLink</td>
+                    <td style="max-width: 70px !important; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                        @p.Product.ImgLink
+                    </td>
                     <td>@p.Product.PrimaryColor</td>
                     <td>@p.Product.SecondaryColor</td>
                     @if (p.Categories.Count() >= 1)
