@@ -22,11 +22,19 @@
                     }
                     <li>Main color: @Model.Product.PrimaryColor</li>
                 </ul>
-                <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
-                    <input type="hidden" asp-for="@Model.Product.ProductId" name="productId" />
-                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                    <button type="submit" class="btn btn-success">Add To Cart</button>
-                </form>
+                <div class="row">
+                    <div class="col-3">
+                        <button asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@Model.Product.ProductId" class="btn btn-success">View Details</button>
+                    </div>
+                    <div class="col-9">
+                        <form id="@Model.Product.ProductId" method="post" asp-page="/Cart">
+                            <input type="hidden" asp-for="@Model.Product.ProductId" name="productId" />
+                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                            <button type="submit" class="btn btn-success">Add To Cart</button>
+                        </form>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </a>
