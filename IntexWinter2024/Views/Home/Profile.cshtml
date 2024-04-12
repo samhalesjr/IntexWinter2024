@@ -14,20 +14,28 @@
     }
     else
     {
-        <div class="container">
+    <div class="container" style="width:50%; justify-content: center; align-items: center;">
             <div class="container-header">
-                <h2 style="text-align: center; font-family: sans-serif; color: white;">Hi, @Model.Customer.FirstName! Here are your past orders:</h2>
+                <h2 style="text-align: center; font-family: sans-serif; color: white;">Hi, @Model.Customer.FirstName!</h2>
+                <h4 style="text-align: center; font-family: sans-serif; color: white;"> Here are your past orders:</h4>
             </div>
             @foreach (Order o in Model.Orders)
             {
-                <div class="order-info-container">
+                <div class="order-info-container row">
                     <h3>Transaction ID: @o.TransactionId</h3>
-                    <h3>Date of Purchase: @o.DayOfWeek, @o.Date</h3>
-                    <h3>@o.EntryMode</h3>
-                    <h3>Total Cost: @o.Amount</h3>
-                    <h3>Transaction Method: @o.TypeOfTransaction</h3>
-                    <h3>Shipping Address: @o.ShippingAddress</h3>
-                    <h3>Type of Card Used: @o.TypeOfCard</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><span class="fw-bold">Date of Purchase:</span> @o.DayOfWeek, @o.Date</p>
+                            <p><span class="fw-bold">Total Cost:</span> @o.Amount</p>
+                            <p><span class="fw-bold">Shipping Address:</span> @o.ShippingAddress</p>
+                        </div>
+                        <div class="col">
+                            <p><span class="fw-bold">Entry Mode:</span> @o.EntryMode</p>
+                            <p><span class="fw-bold">Transaction Method:</span> @o.TypeOfTransaction</p>
+                            <p><span class="fw-bold">Type of Card Used:</span> @o.TypeOfCard</p>
+                        </div>
+                    </div>
+                    <hr style="border-top: 2px solid black;">
                 </div>
             }
         </div>
