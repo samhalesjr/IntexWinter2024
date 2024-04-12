@@ -7,15 +7,22 @@
     
     <div class="col-8">
         <h3>Title: @Model.ProductCategory.Product.Name</h3>
-        <p>@Model.ProductCategory.Product.Price</p>
-        @if (Model.ProductCategory.Categories.Count() == 1)
-        {
-            <li>Category: @Model.ProductCategory.Categories.First()</li>
-        }
-        else
-        {
-            <li>Categories: @string.Join(", ", Model.ProductCategory.Categories)</li>
-        }
+        <p>$@Model.ProductCategory.Product.Price</p>
+        <ul>
+            <li>Release Year: @Model.ProductCategory.Product.Year</li>
+            <li>Number of Pieces: @Model.ProductCategory.Product.NumParts</li>
+            <li>Primary Color: @Model.ProductCategory.Product.PrimaryColor</li>
+            <li>Secondary Color: @Model.ProductCategory.Product.SecondaryColor</li>
+            @if (Model.ProductCategory.Categories.Count() == 1)
+            {
+                <li>Category: @Model.ProductCategory.Categories.First()</li>
+            }
+            else
+            {
+                <li>Categories: @string.Join(", ", Model.ProductCategory.Categories)</li>
+            }
+        </ul>
+
     </div>
 </div>
 <div class="m-2">
