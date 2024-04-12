@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 
 namespace IntexWinter2024.Controllers
@@ -37,7 +38,7 @@ namespace IntexWinter2024.Controllers
             {
                 _logger.LogError($"Error loading the ONNX model: {ex.Message}");
             }
-        }  
+        }
 
         public IActionResult Index()
         {
