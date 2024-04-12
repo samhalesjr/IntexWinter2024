@@ -42,6 +42,6 @@ namespace IntexWinter2024.Models
         // Navigation property to the Customer
         public virtual Customer Customer { get; set; }
 
-        public int TempCustomerId { get; set; }
+        //public int TempCustomerId { get; set; }
     }
 }

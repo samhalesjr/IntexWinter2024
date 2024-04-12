@@ -141,6 +141,7 @@ namespace IntexWinter2024.Controllers
         public IActionResult OrderReview()
         {
             var fraudulentOrders = _repo.Orders
+                .Include(x => x.Customer)
                 .Where(x => x.Fraud == true)
                 .ToList();
 
