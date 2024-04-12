@@ -54,16 +54,19 @@
             {
                 
                     <div class="col-4 row my-3">
-                        <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@product.ProductId">
                             <div class="col-5">
-                                <img src="@product.ImgLink" width="100px" />
+                                <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@product.ProductId">
+                                    <img src="@product.ImgLink" width="100px" />
+                                </a>
                             </div>
                             <div class="col-7">
-                                <h6>@product.Name</h6>
-                                <p>Price: $@product.Price</p>
-                                <p>Number of pieces: @product.NumParts</p>
+                                 <a asp-controller="Home" asp-action="ProductDetails" asp-route-productId="@product.ProductId">
+                                    <h6>@product.Name</h6>
+                                    <p>Price: $@product.Price</p>
+                                    <p>Number of pieces: @product.NumParts</p>
+                                </a>
                             </div>
-                        </a>
+                        
                     </div>
 
             }
