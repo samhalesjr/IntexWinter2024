@@ -291,7 +291,6 @@ namespace IntexWinter2024.Controllers
                      // _logger.LogError($"Error during prediction: {ex.Message}");
                      ViewBag.Prediction = "Error during prediction.";
                  }
-
                 
                 _repo.SaveOrder(order);
                 cart.ClearCart();
