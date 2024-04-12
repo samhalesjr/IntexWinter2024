@@ -91,6 +91,16 @@ namespace IntexWinter2024
             // Cookie policy
             app.UseCookiePolicy();
 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("Content-Security-Policy",
+                    "default-src 'self'; " +
+                    "script-src 'self'; " +
+                    "style-src 'self' 'unsafe-inline'; " + // Note: 'unsafe-inline' for styles can be a security risk
+                    "img-src 'self' m.media-amazon.com images.brickset.com www.lego.com;");
+                await next();
+            });
+
             // url routes for product details
             app.MapControllerRoute("productDetails", "/ProductDetails/{productId?}",
                 new { Controller = "Home", Action = "ProductDetails" }, new { productId = @"\d+" });
