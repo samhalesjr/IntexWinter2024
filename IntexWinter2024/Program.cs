@@ -102,8 +102,6 @@ namespace IntexWinter2024
                 defaults: new { controller = "Home", action = "Browse", pageNum = 1 }
             );
 
-            app.MapDefaultControllerRoute();
-
             app.MapRazorPages();
             // Cookie policy
             app.UseCookiePolicy();
@@ -122,6 +120,9 @@ namespace IntexWinter2024
             app.MapControllerRoute("productDetails", "/ProductDetails/{productId?}",
                 new { Controller = "Home", Action = "ProductDetails" }, new { productId = @"\d+" });
 
+            app.MapControllerRoute("cart", "/Cart/{subtotal}",
+                new { Controller = "Order", Action = "Checkout" });
+            
             app.MapDefaultControllerRoute();
 
             app.Run();
