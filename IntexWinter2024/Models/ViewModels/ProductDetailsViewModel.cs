@@ -4,6 +4,6 @@ namespace IntexWinter2024.Models.ViewModels
     {
         public ProductCategoryViewModel ProductCategory { get; set; }
         
-        public List<Product> ProductBasedProductRecommendation { get; set; }
+        public List<Product>? ProductBasedProductRecommendation { get; set; }
     }
 }

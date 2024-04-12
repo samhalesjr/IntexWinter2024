@@ -204,47 +204,46 @@ namespace IntexWinter2024.Controllers
                 .Include(r => r.RecommendationSix)
                 .SingleOrDefault(r => r.ProductId == productId);
 
-            // Construct a list of recommended products
-            var recommendedProducts = new List<Product>
-            {
-                productRecommendations.RecommendationOne,
-                productRecommendations.RecommendationTwo,
-                productRecommendations.RecommendationThree,
-                productRecommendations.RecommendationFour,
-                productRecommendations.RecommendationFive,
-                productRecommendations.RecommendationSix
-            };
+            var viewModel = new ProductDetailsViewModel { };
 
-            // Construct an instance of ProductDetailsViewModel
-            var viewModel = new ProductDetailsViewModel
+            if (productRecommendations != null)
+            {
+                // Construct a list of recommended products
+                var recommendedProducts = new List<Product>
+                {
+                    productRecommendations.RecommendationOne,
+                    productRecommendations.RecommendationTwo,
+                    productRecommendations.RecommendationThree,
+                    productRecommendations.RecommendationFour,
+                    productRecommendations.RecommendationFive,
+                    productRecommendations.RecommendationSix
+                };
+                // Construct an instance of ProductDetailsViewModel
+                viewModel = new ProductDetailsViewModel
+                {
+                    ProductCategory = productCategoryViewModel,
+                    ProductBasedProductRecommendation = recommendedProducts
+                };
+            }
+
+            viewModel = new ProductDetailsViewModel
             {
                 ProductCategory = productCategoryViewModel,
-                ProductBasedProductRecommendation = recommendedProducts
+                ProductBasedProductRecommendation = null
             };
+
             return View(viewModel);
         }
 
+        [HttpGet]
         public IActionResult ProductEdit()
         {
             if (((string)ViewData["ApplicationUserRole"]) == "Admin")
             {
-                var products = _repo.Products
+                var products = _repo.ProductCategoryViewModels
                 .ToList();
 
                 return View(products);
-            }
-            else return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public IActionResult ProductEditPage(int id)
-        {
-            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
-            {
-                var productToEdit = _repo.Products
-                .SingleOrDefault(x => x.ProductId == id);
-
-                return View(productToEdit);
             }
             else return RedirectToAction("Index");
         }
@@ -254,11 +253,41 @@ namespace IntexWinter2024.Controllers
         {
             if (((string)ViewData["ApplicationUserRole"]) == "Admin")
             {
-                _repo.EditProduct(updatedInfo);
+                _repo.EditProduct(updatedInfo); //May need to change EFrepo method from Product to ProductCateViewModel
 
                 return RedirectToAction("ProductEdit");
             }
             else return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public IActionResult ProductEditPage(int id)
+        {
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                var productToEdit = _repo.Products
+                    .SingleOrDefault(x => x.ProductId == id);
+
+                return View(productToEdit);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+            if (((string)ViewData["ApplicationUserRole"]) == "Admin")
+            {
+                return View("ProductEditPage", new Product { });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult UserEdit()

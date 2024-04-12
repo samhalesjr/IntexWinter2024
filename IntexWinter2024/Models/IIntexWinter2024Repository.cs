@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Security.Claims;
+using IntexWinter2024.Models.ViewModels;
 
 namespace IntexWinter2024.Models
 {
@@ -9,6 +10,7 @@ namespace IntexWinter2024.Models
     {
         public IQueryable<Customer> Customers { get; }
         public IQueryable<Product> Products { get; }
+        public IQueryable<ProductCategoryViewModel> ProductCategoryViewModels { get; }
         public IQueryable<Order> Orders { get; }
         void SaveOrder(Order order);
         public IQueryable<LineItem> LineItems { get; }
