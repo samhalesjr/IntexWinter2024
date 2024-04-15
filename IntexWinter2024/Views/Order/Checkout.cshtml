@@ -10,9 +10,8 @@
         <input type="hidden" asp-for="Date" value="@DateTime.Now" /> 
         <input type="hidden" asp-for="DayOfWeek" value="@DateTime.Now.ToString("ddd")" />
         <input type="hidden" asp-for="EntryMode" value="CVC" />
-        <input type="hidden" asp-for="Amount" value="1" />
+        <input type="hidden" asp-for="Amount" value="@Model.Amount" />
         <input type="hidden" asp-for="TypeOfTransaction" value="Online" />
-        <input type="hidden" asp-for="CountryOfTransaction" value="test" />
         <input type="hidden" asp-for="TypeOfCard" value="VISA" />
         <h3>Ship to</h3>
         <div class="form-group">
@@ -48,13 +47,19 @@
         <div class="form-group">
             <label>Affiliated Bank:</label>
             <select class="form-control" asp-for="Bank">
+                <option diabled selected value=""> - Please Select - </option>
                 <option value="HSBC">HSBC</option>
                 <option value="Halifax">Halifax</option>
                 <option value="Lloyds">Lloyds</option>
                 <option value="Metro">Metro</option>
                 <option value="Monzo">Monzo</option>
                 <option value="RBS">RBS</option>
+                <option value="Barclays">Barclays</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label>Country of Transaction:</label>
+            <input class="form-control" asp-for="CountryOfTransaction" />
         </div>
         <h3>Options</h3>
         <div class="checkbox">

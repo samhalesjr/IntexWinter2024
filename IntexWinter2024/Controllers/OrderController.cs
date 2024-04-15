@@ -33,16 +33,16 @@ namespace IntexWinter2024.Controllers
                 // _logger.LogError($"Error loading the ONNX model: {ex.Message}");
             }
         }
-
+        
         public IActionResult Checkout()
         {
             if (!User.Identity.IsAuthenticated) return RedirectToAction("Login", "Account");
             var customerId = ViewData["CustomerId"];
-            return View(new Order());
+            return View(new Order{});
         }
 
         [HttpPost]
-        public IActionResult Checkout(Order order)
+        public IActionResult Checkout(Order order, decimal subtotal)
         {
             if (!User.Identity.IsAuthenticated) return RedirectToAction("Login","Account");
 
@@ -61,6 +61,7 @@ namespace IntexWinter2024.Controllers
             }
             if (ModelState.IsValid)
             {
+                order.Amount = subtotal;
 
                 order.Lines = cart.Lines.Select(l => new LineItem
                 {
@@ -171,7 +172,7 @@ namespace IntexWinter2024.Controllers
                      {
                          shipping_address_USA = 1;
                      }
-                     else if (order.ShippingAddress == "UnitedKingdom")
+                     else if (order.ShippingAddress == "United Kingdom")
                      {
                          shipping_address_UnitedKingdom = 1;
                      }
@@ -189,7 +190,7 @@ namespace IntexWinter2024.Controllers
                      {
                          country_of_transaction_USA = 1;
                      }
-                     else if (order.CountryOfTransaction == "UnitedKingdom")
+                     else if (order.CountryOfTransaction == "United Kingdom")
                      {
                          country_of_transaction_UnitedKingdom = 1;
                      }
@@ -271,11 +272,22 @@ namespace IntexWinter2024.Controllers
                          if (prediction != null && prediction.Length > 0)
                          {
                             // then it is a fraud
-                            order.Flagged = true;
-                            _repo.SaveOrder(order);
-                            cart.ClearCart();
+                            if (Convert.ToBoolean(prediction[0]))
+                            {
+                                order.Flagged = false;
+                                _repo.SaveOrder(order);
+                                cart.ClearCart();
+                                return RedirectToPage("/Completed", new { transactionId = order.TransactionId });
+                            }
+                            else
+                            {
+                                order.Flagged = true;
+                                _repo.SaveOrder(order);
+                                cart.ClearCart();
+                                return View("Fraudulent");
+                            }
+                            
 
-                            return View("Fraudulent");
                          }
                          else
                          {

@@ -41,7 +41,7 @@
     <tfoot>
         <tr>
             <td colspan="4" class="text-right">Total:</td>
-            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
+            <td class="text-right" name="Subtotal">@Model.Cart?.CalculateTotal().ToString("c")</td>
         </tr>
     </tfoot>
 
@@ -49,5 +49,6 @@
 
 <div class="text-right">
     <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
-    <a class="btn btn-primary" asp-action="Checkout" asp-controller="Order">Checkout</a>
+    <a class="btn btn-primary" asp-action="Checkout" asp-controller="Order" 
+       asp-route-subtotal="@Model.Cart?.CalculateTotal().ToString()">Checkout</a>
 </div>
